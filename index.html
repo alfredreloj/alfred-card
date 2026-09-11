@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Alfred P. Reloj — AI & Software Automation Consultant, Tercet Innovations Inc. Save the contact, call, or email.">
+<meta name="theme-color" content="#0b0f14">
+<meta property="og:title" content="Alfred P. Reloj · Tercet">
+<meta property="og:description" content="AI & Software Automation Consultant — Tercet Innovations Inc">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%230b0f14%27/%3E%3Ctext x=%2732%27 y=%2745%27 font-family=%27Georgia,serif%27 font-style=%27italic%27 font-size=%2740%27 fill=%27%235ee0d0%27 text-anchor=%27middle%27%3ET%3C/text%3E%3C/svg%3E">
+<title>Alfred P. Reloj</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Albert+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* ── Tercet card · one committed dark world (painted explicitly, no host bleed) ── */
+  :root{
+    --ground:#0b0f14;
+    --surface:#111820;
+    --surface-2:#161f29;
+    --line:rgba(232,238,242,.10);
+    --line-strong:rgba(232,238,242,.18);
+    --text:#e8eef2;
+    --muted:#8a98a6;
+    --accent:#5ee0d0;
+    --accent-deep:#2fb5a5;
+    --accent-ink:#06302b;
+    --glow:rgba(94,224,208,.28);
+    --font-display:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --font-body:"Albert Sans","Helvetica Neue",Arial,sans-serif;
+    --font-mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--ground)}
+  body{
+    margin:0;background:var(--ground);color:var(--text);
+    font-family:var(--font-body);font-size:16px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;
+    min-height:100dvh;
+  }
+  .page{max-width:520px;margin:0 auto;padding:0 20px 56px}
+
+  /* eyebrow */
+  .eyebrow{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:18px 0 6px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);white-space:nowrap;
+  }
+  .eyebrow .mark{display:inline-flex;align-items:center;gap:10px;color:var(--text);min-width:0}
+  .eyebrow .mark i{
+    display:inline-block;width:18px;height:18px;border-radius:5px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-deep));
+    box-shadow:0 0 18px var(--glow);
+  }
+  .eyebrow .loc{font-variant-numeric:tabular-nums}
+
+  /* stage */
+  .stage{
+    position:relative;height:clamp(380px,56vh,540px);margin:0 -20px;
+    /* touch-action:none — the stage owns every drag direction (up/down/sides/diagonal)
+       so vertical swipes pitch the card instead of scrolling; scroll from below it. */
+    overflow:hidden;cursor:grab;user-select:none;touch-action:none;overscroll-behavior:contain;
+    background:
+      radial-gradient(60% 55% at 50% 48%, rgba(94,224,208,.10), transparent 70%),
+      radial-gradient(120% 80% at 50% 110%, #0f1620, transparent 60%);
+  }
+  .stage:active{cursor:grabbing}
+  .stage canvas{display:block;width:100%;height:100%}
+  .stage .hint{
+    position:absolute;left:0;right:0;bottom:14px;text-align:center;pointer-events:none;
+    font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--muted);opacity:.85;
+  }
+  .stage .hint b{color:var(--accent);font-weight:500}
+  .stage .fallback{
+    display:none;position:absolute;inset:0;align-items:center;justify-content:center;
+  }
+  .stage.nogl .fallback{display:flex}
+  .stage.nogl canvas{display:none}
+  .fallback .card{
+    width:300px;aspect-ratio:1.62;border-radius:16px;
+    background:linear-gradient(135deg,#1a2330,#0c1118 55%,#132029);
+    border:1px solid var(--line-strong);box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 60px var(--glow);
+    display:grid;place-items:end start;padding:18px;font-family:var(--font-display);font-size:34px;color:var(--accent);
+  }
+
+  /* identity */
+  .identity{padding:22px 0 8px}
+  h1{
+    font-family:var(--font-display);font-weight:400;font-size:clamp(40px,11vw,58px);
+    line-height:.98;letter-spacing:-.01em;margin:0;text-wrap:balance;
+  }
+  h1 em{font-style:italic;color:var(--accent)}
+  .role{margin:10px 0 0;font-size:17px;font-weight:500;color:var(--text)}
+  .org{margin:2px 0 0;font-size:15px;color:var(--muted)}
+
+  /* actions — one composed row */
+  .actions{
+    display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:10px;margin:22px 0 26px;
+  }
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    height:50px;border-radius:12px;padding:0 14px;text-decoration:none;
+    font-weight:600;font-size:15px;color:var(--text);
+    background:var(--surface);border:1px solid var(--line-strong);
+    transition:transform .12s ease,background .15s ease,border-color .15s ease;
+  }
+  .btn:hover{background:var(--surface-2);border-color:rgba(232,238,242,.28)}
+  .btn:active{transform:translateY(1px)}
+  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .btn.primary{
+    background:var(--accent);color:var(--accent-ink);border-color:transparent;
+    box-shadow:0 8px 30px var(--glow);
+  }
+  .btn.primary:hover{background:#7ae9db}
+  .btn svg{width:18px;height:18px;flex:none}
+
+  /* readout — the spec sheet */
+  .readout{
+    border-top:1px solid var(--line);
+  }
+  .readout dl{margin:0}
+  .row{
+    display:grid;grid-template-columns:82px 1fr auto;align-items:center;gap:12px;
+    padding:14px 0;border-bottom:1px solid var(--line);
+  }
+  .row dt{
+    margin:0;font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .row dd{margin:0;min-width:0}
+  .row dd a,.row dd span{
+    color:var(--text);text-decoration:none;font-size:15px;
+    overflow-wrap:anywhere;
+  }
+  .row dd a:hover{color:var(--accent)}
+  .row dd .num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+  .copy{
+    appearance:none;border:1px solid var(--line-strong);background:transparent;color:var(--muted);
+    font:500 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
+    padding:8px 10px;border-radius:8px;cursor:pointer;min-width:74px;
+    transition:color .15s,border-color .15s,background .15s;
+  }
+  .copy:hover{color:var(--text);border-color:rgba(232,238,242,.3)}
+  .copy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .copy.done{color:var(--accent-ink);background:var(--accent);border-color:transparent}
+
+  /* footer */
+  .foot{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding-top:20px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--muted);
+  }
+  .foot a{color:var(--muted);text-decoration:none}
+  .foot a:hover{color:var(--accent)}
+  .foot button{
+    appearance:none;background:none;border:0;color:var(--muted);cursor:pointer;
+    font:inherit;letter-spacing:inherit;text-transform:inherit;padding:0;
+  }
+  .foot button:hover{color:var(--accent)}
+  .foot button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+  .toast{
+    position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(8px);
+    background:var(--surface-2);color:var(--text);border:1px solid var(--line-strong);
+    padding:10px 14px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;
+    transition:opacity .2s,transform .2s;box-shadow:0 10px 30px rgba(0,0,0,.5);
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media (min-width:640px){
+    .page{max-width:560px}
+    .stage{margin:0 -20px;border-radius:0 0 24px 24px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .btn,.copy,.toast{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <header class="eyebrow">
+    <span class="mark"><i aria-hidden="true"></i>Tercet Innovations Inc</span>
+    <span class="loc">Philippines · GMT+8</span>
+  </header>
+
+  <section class="stage" id="stage" aria-label="Interactive 3D business card">
+    <canvas id="scene"></canvas>
+    <div class="fallback" aria-hidden="true"><div class="card">Tercet</div></div>
+    <div class="hint" id="hint"><b>Drag</b> or tilt to turn it · <b>Tap</b> to flip</div>
+  </section>
+
+  <section class="identity">
+    <h1>Alfred <em>P.</em> Reloj</h1>
+    <p class="role">AI &amp; Software Automation Consultant</p>
+    <p class="org">Tercet Innovations Inc</p>
+  </section>
+
+  <nav class="actions" aria-label="Contact actions">
+    <a class="btn primary" id="save" href="#" role="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+      Save contact
+    </a>
+    <a class="btn" href="tel:+639173153590">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.7a2 2 0 0 1 1.7 2z"/></svg>
+      Call
+    </a>
+    <a class="btn" href="mailto:alfred@tercetai.com">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      Email
+    </a>
+  </nav>
+
+  <section class="readout" aria-label="Contact details">
+    <dl>
+      <div class="row">
+        <dt>Mobile</dt>
+        <dd><a class="num" href="tel:+639173153590">0917 315 3590</a></dd>
+        <button class="copy" data-copy="+63 917 315 3590" type="button">Copy</button>
+      </div>
+      <div class="row">
+        <dt>Email</dt>
+        <dd><a href="mailto:alfred@tercetai.com">alfred@tercetai.com</a></dd>
+        <button class="copy" data-copy="alfred@tercetai.com" type="button">Copy</button>
+      </div>
+      <div class="row">
+        <dt>Company</dt>
+        <dd><span>Tercet Innovations Inc</span></dd>
+        <button class="copy" data-copy="Tercet Innovations Inc" type="button">Copy</button>
+      </div>
+      <div class="row">
+        <dt>Focus</dt>
+        <dd><span>AI systems · software automation · custom business platforms</span></dd>
+        <span></span>
+      </div>
+      <div class="row">
+        <dt>Web</dt>
+        <dd><a href="https://tercetai.com" target="_blank" rel="noopener">tercetai.com</a></dd>
+        <button class="copy" data-copy="https://tercetai.com" type="button">Copy</button>
+      </div>
+    </dl>
+  </section>
+
+  <footer class="foot">
+    <a href="https://tercetai.com" target="_blank" rel="noopener">tercetai.com</a>
+    <button id="share" type="button">Share this card</button>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ───────────── contact actions ───────────── */
+  var VCARD = [
+    'BEGIN:VCARD','VERSION:3.0',
+    'N:Reloj;Alfred;P.;;','FN:Alfred P. Reloj',
+    'ORG:Tercet Innovations Inc','TITLE:AI and Software Automation Consultant',
+    'TEL;TYPE=CELL,VOICE:+639173153590','EMAIL;TYPE=INTERNET,WORK:alfred@tercetai.com',
+    'URL:https://tercetai.com','END:VCARD'
+  ].join('\r\n');
+
+  var toastEl = document.getElementById('toast'), toastT;
+  function toast(msg) {
+    toastEl.textContent = msg; toastEl.classList.add('show');
+    clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove('show'); }, 1600);
+  }
+
+  document.getElementById('save').addEventListener('click', function (e) {
+    e.preventDefault();
+    try {
+      var blob = new Blob([VCARD], { type: 'text/vcard;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'Alfred-P-Reloj-Tercet.vcf';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+      toast('Contact card ready — open it to save');
+    } catch (err) { toast('Could not start the download'); }
+  });
+
+  function copyText(t, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t).then(done, function () { fallbackCopy(t, done); });
+    } else fallbackCopy(t, done);
+  }
+  function fallbackCopy(t, done) {
+    var ta = document.createElement('textarea'); ta.value = t; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta);
+    ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove(); done();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('.copy'), function (b) {
+    b.addEventListener('click', function () {
+      copyText(b.getAttribute('data-copy'), function () {
+        b.textContent = 'Copied'; b.classList.add('done');
+        setTimeout(function () { b.textContent = 'Copy'; b.classList.remove('done'); }, 1300);
+      });
+    });
+  });
+  document.getElementById('share').addEventListener('click', function () {
+    var data = { title: 'Alfred P. Reloj · Tercet', text: 'AI & Software Automation Consultant', url: location.href };
+    if (navigator.share) { navigator.share(data).catch(function () {}); }
+    else copyText(location.href, function () { toast('Link copied'); });
+  });
+
+  /* ───────────── 3D stage ───────────── */
+  var stage = document.getElementById('stage');
+  var canvas = document.getElementById('scene');
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
+  } catch (e) { stage.classList.add('nogl'); return; }
+  if (!renderer.getContext()) { stage.classList.add('nogl'); return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setClearColor(0x000000, 0);
+
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+  camera.position.set(0, 0, 8.4);
+
+  var ACCENT = new THREE.Color(0x5ee0d0);
+  var BASE = new THREE.Color(0x0e141b);
+
+  /* card = three slabs (a tercet). Credit-card proportion. */
+  var W = 3.5, H = 2.16, D = 0.10, GAP = 0.028;
+  var slabH = (H - GAP * 2) / 3;
+
+  function roundedRect(w, h, r) {
+    var s = new THREE.Shape(), x = -w / 2, y = -h / 2;
+    s.moveTo(x + r, y);
+    s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r);
+    s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r);
+    s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y);
+    return s;
+  }
+
+  /* etched marks: front = wordmark + monogram, back = contact readout */
+  function makeMark(back) {
+    var c = document.createElement('canvas'); c.width = 1024; c.height = 632;
+    var g = c.getContext('2d');
+    g.fillStyle = '#000'; g.fillRect(0, 0, c.width, c.height);
+    g.fillStyle = '#fff'; g.textBaseline = 'alphabetic';
+    if (!back) {
+      g.font = '500 30px "JetBrains Mono", monospace';
+      g.letterSpacing = '10px';
+      g.fillText('T E R C E T', 72, 96);
+      g.font = '400 22px "JetBrains Mono", monospace'; g.globalAlpha = .7;
+      g.fillText('INNOVATIONS INC', 72, 134);
+      g.globalAlpha = 1;
+      g.font = 'italic 400 300px "Instrument Serif", Georgia, serif';
+      g.fillText('T', 700, 560);
+      g.fillRect(72, 540, 300, 2);
+      g.font = '400 24px "JetBrains Mono", monospace'; g.globalAlpha = .75;
+      g.fillText('ALFRED P. RELOJ', 72, 585);
+    } else {
+      g.font = '500 26px "JetBrains Mono", monospace'; g.globalAlpha = .7;
+      g.fillText('MOBILE', 72, 120);
+      g.globalAlpha = 1; g.font = '500 60px "JetBrains Mono", monospace';
+      g.fillText('0917 315 3590', 72, 190);
+      g.font = '500 26px "JetBrains Mono", monospace'; g.globalAlpha = .7;
+      g.fillText('EMAIL', 72, 290);
+      g.globalAlpha = 1; g.font = '500 48px "JetBrains Mono", monospace';
+      g.fillText('alfred@tercetai.com', 72, 352);
+      g.font = '500 26px "JetBrains Mono", monospace'; g.globalAlpha = .7;
+      g.fillText('AI & SOFTWARE AUTOMATION', 72, 470);
+      g.fillText('tercetai.com', 72, 512);
+      g.globalAlpha = 1;
+      g.font = 'italic 400 140px "Instrument Serif", Georgia, serif';
+      g.fillText('T', 860, 560);
+    }
+    var t = new THREE.CanvasTexture(c); t.minFilter = THREE.LinearFilter; t.anisotropy = 4;
+    return t;
+  }
+  var markFront = makeMark(false), markBack = makeMark(true);
+
+  var vert = [
+    'uniform float uOffY; uniform vec2 uSize;',
+    'varying vec3 vN; varying vec3 vV; varying vec2 vUv; varying float vFront;',
+    'void main(){',
+    '  vec3 cp = position + vec3(0.0, uOffY, 0.0);',
+    '  vUv = cp.xy / uSize + 0.5;',
+    '  vFront = normal.z;',
+    '  vec4 mv = modelViewMatrix * vec4(position, 1.0);',
+    '  vN = normalize(normalMatrix * normal); vV = mv.xyz;',
+    '  gl_Position = projectionMatrix * mv;',
+    '}'
+  ].join('\n');
+
+  var frag = [
+    'uniform float uTime; uniform vec3 uBase; uniform vec3 uRim; uniform float uPulse;',
+    'uniform sampler2D uMarkF; uniform sampler2D uMarkB;',
+    'varying vec3 vN; varying vec3 vV; varying vec2 vUv; varying float vFront;',
+    'vec3 pal(float t){ return 0.5 + 0.5 * cos(6.28318 * (t + vec3(0.0, 0.33, 0.67))); }',
+    'void main(){',
+    '  vec3 n = normalize(vN); vec3 v = normalize(-vV);',
+    '  float ndv = clamp(dot(n, v), 0.0, 1.0);',
+    '  float fres = pow(1.0 - ndv, 2.6);',
+    /* thin-film interference: hue rides on view angle + surface position */
+    '  float t = ndv * 1.7 + vUv.x * 0.8 - vUv.y * 0.3 + uTime * 0.05;',
+    '  vec3 irid = pal(t);',
+    /* a soft light band sweeping diagonally */
+    '  float b = fract(vUv.x * 0.9 - vUv.y * 0.45 + uTime * 0.07);',
+    '  float band = smoothstep(0.42, 0.5, b) * smoothstep(0.58, 0.5, b);',
+    /* fixed key light spec */
+    '  vec3 l = normalize(vec3(0.6, 0.9, 1.0));',
+    '  float spec = pow(max(dot(reflect(-l, n), v), 0.0), 60.0);',
+    '  vec3 col = uBase;',
+    '  col += irid * (fres * 0.85 + band * 0.16);',
+    '  col += uRim * (fres * 0.45 + uPulse * 0.6);',
+    '  col += vec3(0.9, 0.95, 1.0) * spec * 0.35;',
+    /* fine etched grid, only on faces */
+    '  if (abs(vFront) > 0.5) {',
+    '    vec2 g = abs(fract(vUv * vec2(40.0, 25.0)) - 0.5);',
+    '    col += smoothstep(0.47, 0.5, max(g.x, g.y)) * 0.035;',
+    '    float mark = vFront > 0.0 ? texture2D(uMarkF, vUv).r : texture2D(uMarkB, vec2(1.0 - vUv.x, vUv.y)).r;',
+    '    col += uRim * mark * (0.55 + 0.35 * fres + uPulse * 0.5);',
+    '  }',
+    '  gl_FragColor = vec4(col, 1.0);',
+    '}'
+  ].join('\n');
+
+  var card = new THREE.Group();
+  scene.add(card);
+  var slabs = [], mats = [];
+  for (var i = 0; i < 3; i++) {
+    var offY = (1 - i) * (slabH + GAP);
+    var geo = new THREE.ExtrudeGeometry(roundedRect(W, slabH, 0.11), {
+      depth: D, bevelEnabled: true, bevelThickness: 0.018, bevelSize: 0.018, bevelSegments: 3, curveSegments: 10
+    });
+    geo.center();
+    var mat = new THREE.ShaderMaterial({
+      vertexShader: vert, fragmentShader: frag,
+      uniforms: {
+        uTime: { value: 0 }, uOffY: { value: offY }, uSize: { value: new THREE.Vector2(W, H) },
+        uBase: { value: BASE }, uRim: { value: ACCENT }, uPulse: { value: 0 },
+        uMarkF: { value: markFront }, uMarkB: { value: markBack }
+      }
+    });
+    var m = new THREE.Mesh(geo, mat);
+    m.position.y = offY;
+    card.add(m); slabs.push(m); mats.push(mat);
+  }
+
+  /* halo behind the card (bloom without post-processing) */
+  (function () {
+    var c = document.createElement('canvas'); c.width = c.height = 256;
+    var g = c.getContext('2d');
+    var r = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+    r.addColorStop(0, 'rgba(94,224,208,0.55)'); r.addColorStop(0.45, 'rgba(94,224,208,0.12)'); r.addColorStop(1, 'rgba(94,224,208,0)');
+    g.fillStyle = r; g.fillRect(0, 0, 256, 256);
+    var t = new THREE.CanvasTexture(c);
+    var halo = new THREE.Mesh(new THREE.PlaneGeometry(7.5, 7.5),
+      new THREE.MeshBasicMaterial({ map: t, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+    halo.position.z = -0.9; halo.name = 'halo'; scene.add(halo);
+  })();
+
+  /* lattice: drifting nodes + near-neighbour links */
+  var lattice = new THREE.Group(); scene.add(lattice);
+  (function () {
+    var N = 220, pos = new Float32Array(N * 3), pts = [];
+    for (var k = 0; k < N; k++) {
+      var r = 3.2 + Math.random() * 3.4, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
+      var x = r * Math.sin(ph) * Math.cos(th), y = r * Math.sin(ph) * Math.sin(th) * 0.7, z = r * Math.cos(ph) - 1.5;
+      pos[k * 3] = x; pos[k * 3 + 1] = y; pos[k * 3 + 2] = z; pts.push([x, y, z]);
+    }
+    var pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    var c = document.createElement('canvas'); c.width = c.height = 64; var g = c.getContext('2d');
+    var rg = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    rg.addColorStop(0, 'rgba(255,255,255,1)'); rg.addColorStop(0.35, 'rgba(255,255,255,.6)'); rg.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = rg; g.fillRect(0, 0, 64, 64);
+    var dot = new THREE.CanvasTexture(c);
+    lattice.add(new THREE.Points(pg, new THREE.PointsMaterial({
+      size: 0.075, map: dot, color: 0x9fe9df, transparent: true, opacity: 0.85, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
+    })));
+    var lp = [];
+    for (var a = 0; a < N; a++) for (var b = a + 1; b < N; b++) {
+      var dx = pts[a][0] - pts[b][0], dy = pts[a][1] - pts[b][1], dz = pts[a][2] - pts[b][2];
+      if (dx * dx + dy * dy + dz * dz < 1.15) lp.push(pts[a][0], pts[a][1], pts[a][2], pts[b][0], pts[b][1], pts[b][2]);
+    }
+    var lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(lp), 3));
+    lattice.add(new THREE.LineSegments(lg, new THREE.LineBasicMaterial({ color: 0x5ee0d0, transparent: true, opacity: 0.16, depthWrite: false, blending: THREE.AdditiveBlending })));
+  })();
+
+  /* ── sizing ── */
+  function resize() {
+    var w = stage.clientWidth, h = stage.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+    /* keep the card comfortably framed on narrow screens */
+    var fit = Math.min(1, (w / h) / 0.78);
+    card.scale.setScalar(0.72 + 0.28 * fit);
+  }
+  window.addEventListener('resize', resize); resize();
+
+  /* ── interaction state ── */
+  var tiltX = 0, tiltY = 0, curX = 0, curY = 0, yaw = 0, curYaw = 0, flipped = false;
+  var gyroBase = null, usingGyro = false;
+
+  function clamp(v, m) { return Math.max(-m, Math.min(m, v)); }
+  /* mouse hover: tilt by where the cursor is. finger drag: tilt by how far you've
+     dragged from the touch-down point, so even a short swipe swings it hard. */
+  function setTiltFromPointer(ev) {
+    var r = stage.getBoundingClientRect();
+    if (ev.pointerType === 'mouse') {
+      var nx = ((ev.clientX - r.left) / r.width) * 2 - 1, ny = ((ev.clientY - r.top) / r.height) * 2 - 1;
+      tiltY = nx * 0.95; tiltX = -ny * 0.6;
+    } else {
+      tiltY = clamp(((ev.clientX - downX) / r.width) * 3.0, 1.25);
+      tiltX = clamp(-((ev.clientY - downY) / r.height) * 2.6, 1.05);
+    }
+  }
+  var downAt = 0, downX = 0, downY = 0, pressed = false;
+  stage.addEventListener('pointerdown', function (e) {
+    pressed = true; downAt = Date.now(); downX = e.clientX; downY = e.clientY;
+    if (e.pointerType !== 'mouse' && stage.setPointerCapture) { try { stage.setPointerCapture(e.pointerId); } catch (err) {} }
+  });
+  stage.addEventListener('pointermove', function (e) {
+    if (usingGyro) return;
+    /* mouse: hover tilts. finger/pen: drag tilts (works even where motion sensors are blocked). */
+    if (e.pointerType === 'mouse' || pressed) setTiltFromPointer(e);
+  });
+  stage.addEventListener('pointerleave', function () { if (!usingGyro) { tiltX = 0; tiltY = 0; } });
+  function release(e) {
+    pressed = false;
+    if (!usingGyro && e.pointerType !== 'mouse') { tiltX = 0; tiltY = 0; }
+  }
+  stage.addEventListener('pointercancel', release);
+  stage.addEventListener('pointerup', function (e) {
+    var moved = Math.hypot(e.clientX - downX, e.clientY - downY);
+    if (moved < 8 && Date.now() - downAt < 450) { flipped = !flipped; yaw = flipped ? Math.PI : 0; pulse = 1; }
+    release(e);
+    requestGyro();
+  });
+  stage.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flipped = !flipped; yaw = flipped ? Math.PI : 0; pulse = 1; } });
+  stage.setAttribute('tabindex', '0');
+
+  function onOrient(ev) {
+    if (ev.beta == null || ev.gamma == null) return;
+    if (!gyroBase) gyroBase = { b: ev.beta, g: ev.gamma };
+    usingGyro = true;
+    var db = Math.max(-40, Math.min(40, ev.beta - gyroBase.b)) / 40;
+    var dg = Math.max(-40, Math.min(40, ev.gamma - gyroBase.g)) / 40;
+    tiltX = -db * 0.75; tiltY = dg * 1.05;
+  }
+  var gyroAsked = false;
+  function requestGyro() {
+    if (gyroAsked || reduced) return; gyroAsked = true;
+    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission().then(function (s) { if (s === 'granted') window.addEventListener('deviceorientation', onOrient); }).catch(function () {});
+    }
+  }
+  if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission !== 'function') {
+    window.addEventListener('deviceorientation', onOrient);
+  }
+
+  /* ── entrance: three slabs fly in and lock into one card ── */
+  var start = performance.now(), pulse = 0;
+  var from = [{ x: -7, z: -2.5, ry: -0.9 }, { x: 7, z: -1.5, ry: 0.9 }, { x: -7, z: -2.5, ry: -0.9 }];
+  function easeOutExpo(t) { return t >= 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+  var assembled = reduced;
+  if (!reduced) { for (var s = 0; s < 3; s++) { slabs[s].position.x = from[s].x; slabs[s].position.z = from[s].z; slabs[s].rotation.y = from[s].ry; } }
+
+  function frame(now) {
+    var t = (now - start) / 1000;
+    if (!assembled) {
+      var done = true;
+      for (var s = 0; s < 3; s++) {
+        var p = Math.max(0, Math.min(1, (t - 0.15 - s * 0.14) / 1.25)), e = easeOutExpo(p);
+        slabs[s].position.x = from[s].x * (1 - e);
+        slabs[s].position.z = from[s].z * (1 - e);
+        slabs[s].rotation.y = from[s].ry * (1 - e);
+        if (p < 1) done = false;
+      }
+      if (done) { assembled = true; pulse = 1; }
+    }
+    pulse = Math.max(0, pulse - 0.02);
+
+    var idleY = reduced ? 0 : Math.sin(t * 0.9) * 0.06;
+    var idleYaw = reduced ? 0 : Math.sin(t * 0.5) * 0.11;
+    curX += (tiltX - curX) * 0.16; curY += (tiltY - curY) * 0.16; curYaw += (yaw - curYaw) * 0.075;
+    card.rotation.x = curX; card.rotation.y = curYaw + curY + idleYaw; card.position.y = idleY;
+
+    lattice.rotation.y = t * 0.03; lattice.rotation.x = Math.sin(t * 0.11) * 0.08;
+    var halo = scene.getObjectByName('halo'); if (halo) halo.material.opacity = 0.75 + Math.sin(t * 1.3) * 0.12 + pulse * 0.4;
+
+    for (var k = 0; k < 3; k++) { mats[k].uniforms.uTime.value = t; mats[k].uniforms.uPulse.value = pulse; }
+    renderer.render(scene, camera);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  /* fonts load after first paint — redraw the etched marks once they're in */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () {
+      var nf = makeMark(false), nb = makeMark(true);
+      for (var k = 0; k < 3; k++) { mats[k].uniforms.uMarkF.value = nf; mats[k].uniforms.uMarkB.value = nb; }
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
