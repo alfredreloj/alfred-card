@@ -1,0 +1,17 @@
+# DigitalOcean App Platform spec — static site, Tercet team.
+# Deploy: doctl --context tercet apps create --spec do/app.yaml
+name: alfred-card
+region: sgp
+static_sites:
+  - name: web
+    github:
+      repo: alfredreloj/alfred-card
+      branch: main
+      deploy_on_push: true
+    source_dir: /
+    output_dir: /
+    index_document: index.html
+    catchall_document: index.html
+domains:
+  - domain: alfred.tercetai.com
+    type: PRIMARY
