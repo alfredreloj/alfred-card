@@ -271,8 +271,14 @@ form{display:grid;gap:16px}
 /* footer */
 footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34px + env(safe-area-inset-bottom,0px));background:#070b08}
 .foot{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px}
-.foot h4{font-family:var(--mono);font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;font-weight:400}
-.foot a{display:block;color:var(--muted);padding:11px 0;font-size:15px}
+/* column headings lead the hierarchy: brighter, bolder and larger than the links under them */
+.foot h4{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-.2px;margin-bottom:6px}
+.foot h4 a{display:inline-flex;align-items:center;gap:8px;color:var(--text);font-size:17px}
+.foot h4 a::after{content:"→";color:var(--accent);opacity:0;transform:translateX(-4px);transition:.15s}
+.foot h4 a:hover{color:var(--accent)}
+.foot h4 a:hover::after{opacity:1;transform:none}
+.foot h4::before{content:"";display:block;width:22px;height:2px;background:var(--accent);margin-bottom:12px;border-radius:2px}
+.foot a{display:block;color:var(--muted);padding:11px 0;font-size:14.5px}
 .legal a{display:inline-block;padding:13px 0}
 .legal a:hover{color:var(--accent)}
 .foot a:hover{color:var(--accent)}
@@ -617,7 +623,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
       </div>
       <div class="card plan feature">
         <span class="tag">Most popular</span><h3>Ready-made</h3>
-        <div class="amt">₱1,500<small>a month and up</small></div>
+        <div class="amt">₱1,500<small>a month and up, per business or per store depending on the system</small></div>
         <ul><li>Tercet POS or Tercet Payroll</li><li>Set up with your data</li><li>Hosting, backups, updates</li><li>Support from the team that built it</li></ul>
         <a class="btn btn-primary" href="#/contact?topic=pos">Book a demo</a>
       </div>
@@ -756,9 +762,9 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <a class="logo" href="#/home" style="display:inline-block;margin-bottom:12px">TERCET<span>.AI</span></a>
         <p class="muted" style="font-size:15px;max-width:340px">Systems for Philippine businesses, built, tested and run by one team.</p>
       </div>
-      <div><h4>Services</h4><a href="#/services/custom">Custom systems</a><a href="#/services/rescue">System rescue</a><a href="#/services/ai">AI assistants</a><a href="#/services/qa">QA reports</a></div>
-      <div><h4>Products</h4><a href="#/products">Tercet POS</a><a href="#/products">Tercet Payroll</a><a href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=footer" target="_blank" rel="noopener">Tercet Studio</a></div>
-      <div><h4>Company</h4><a href="#/about">About</a><a href="#/work">Our work</a><a href="#/pricing">Pricing</a><a href="#/contact">Contact</a></div>
+      <div><h4><a href="#/services">Services</a></h4><a href="#/services/custom">Custom systems</a><a href="#/services/rescue">System rescue</a><a href="#/services/ai">AI assistants</a><a href="#/services/qa">QA reports</a></div>
+      <div><h4><a href="#/products">Products</a></h4><a href="#/products">Tercet POS</a><a href="#/products">Tercet Payroll</a><a href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=footer" target="_blank" rel="noopener">Tercet Studio</a></div>
+      <div><h4><a href="#/about">Company</a></h4><a href="#/about">About</a><a href="#/work">Our work</a><a href="#/pricing">Pricing</a><a href="#/contact">Contact</a></div>
     </div>
     <div class="legal"><span>© 2026 Tercet AI Innovations Inc.</span><span><a href="mailto:hello@tercetai.com">hello@tercetai.com</a> · <a href="tel:+639173153590">+63 917 315 3590</a></span></div>
   </div>
