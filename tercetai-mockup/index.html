@@ -65,14 +65,16 @@ section{padding:96px 0}
 
 /* ── Header ─────────────────────────────────────────────────── */
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(4,6,10,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
-nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
+header nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
+h2{text-wrap:balance}
 .logo{font-weight:700;font-size:21px;letter-spacing:-.5px;padding:11px 0;transition:opacity .15s}
 .logo:hover{opacity:.85}
 .logo span{color:var(--accent)}
 .nav-cta .btn-ghost.active{border-color:var(--accent);background:rgba(182,246,63,.1)}
 .nav-links{display:flex;gap:6px;align-items:center}
-.nav-links a{padding:9px 13px;border-radius:999px;color:var(--muted);font-size:15px;font-weight:500;transition:.15s}
+.nav-links a{padding:11px 13px;border-radius:999px;color:var(--muted);font-size:15px;font-weight:500;transition:.15s}
 .nav-links a:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.nav-links a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .nav-links a.active{color:var(--text);background:rgba(182,246,63,.1)}
 .nav-cta{display:flex;gap:10px;align-items:center}
 .burger{display:none;background:none;border:1px solid var(--border-soft);color:var(--text);border-radius:12px;width:44px;height:44px;cursor:pointer;font-size:20px}
@@ -84,7 +86,7 @@ nav{display:flex;align-items:center;justify-content:space-between;height:70px;ga
   .mmenu.open{display:flex;flex-direction:column;gap:4px;padding:10px 22px 22px;border-bottom:1px solid var(--border)}
   .mmenu a{padding:13px 10px;border-radius:12px;font-size:17px}
   .mmenu a:hover,.mmenu a.active{background:rgba(182,246,63,.08);color:var(--accent)}
-  .mmenu a.btn-primary{margin-top:8px;justify-content:center;color:#0a1203;background:var(--accent)}
+  .mmenu a.btn-primary{margin-top:8px;justify-content:center;color:#0a1203;background:var(--accent);border-radius:999px}
 }
 @media (max-width:520px){.nav-cta .btn-primary{display:none}}
 
@@ -109,12 +111,13 @@ nav{display:flex;align-items:center;justify-content:space-between;height:70px;ga
 .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
 .kpi{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;padding:12px}
 .kpi small{display:block;font-size:11.5px;color:var(--faint)}
-.kpi b{font-size:20px;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.kpi b{font-size:20px;letter-spacing:-.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.kpi em{display:block;white-space:nowrap}
 .kpi em{font-style:normal;font-size:11.5px;color:var(--accent)}
 .rows{display:flex;flex-direction:column;gap:7px}
 .row{display:grid;grid-template-columns:1.4fr 1fr .8fr;gap:8px;align-items:center;font-size:13px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:9px 12px}
 .row span:last-child{justify-self:end}
-.pill{display:inline-block;font-size:11px;padding:3px 9px;border-radius:999px;background:rgba(182,246,63,.12);color:var(--accent);font-family:var(--mono)}
+.pill{display:inline-block;white-space:nowrap;font-size:11px;padding:3px 9px;border-radius:999px;background:rgba(182,246,63,.12);color:var(--accent);font-family:var(--mono)}
 .pill.teal{background:rgba(70,224,176,.12);color:var(--teal)}
 .pill.warn{background:rgba(245,192,74,.12);color:var(--warn)}
 .bars{display:flex;align-items:flex-end;gap:6px;height:64px;margin:4px 0 14px}
@@ -185,11 +188,15 @@ a.card:hover{border-color:var(--accent);transform:translateY(-3px);background:#0
 .page-head{padding:72px 0 30px}
 .page-head h1{font-size:clamp(36px,5.4vw,64px);margin:18px 0 16px}
 .crumb{font-family:var(--mono);font-size:12.5px;color:var(--faint)}
+/* contact: shorter header so "Send message" sits above the fold on a 768px laptop */
+.page-head--compact{padding:40px 0 22px}
+.page-head--compact h1{font-size:clamp(32px,4.2vw,50px);margin:12px 0 10px}
 .crumb a{display:inline-block;padding:13px 8px;margin:-13px -8px;min-width:44px;text-align:center}
 .crumb a:hover{color:var(--accent)}
 
 /* service rows */
-.svc{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;padding:44px 0;border-top:1px solid var(--border);scroll-margin-top:90px}
+.svc{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;padding:44px 0;border-top:1px solid var(--border);scroll-margin-top:150px}
+.svc h2[tabindex]:focus{outline:none}
 .svc ul{list-style:none;display:grid;gap:10px;margin-top:6px}
 /* block + absolute arrow so mixed <b>/text items wrap as one paragraph */
 .svc li{display:block;position:relative;padding-left:1.5em;color:var(--muted)}
@@ -210,7 +217,7 @@ a.card:hover{border-color:var(--accent);transform:translateY(-3px);background:#0
 .plan{gap:14px}
 .plan.feature{border-color:var(--accent);box-shadow:0 0 0 1px rgba(182,246,63,.25),0 30px 60px -30px rgba(182,246,63,.35)}
 .plan .amt{font-size:34px;font-weight:700;letter-spacing:-1px}
-.plan .amt small{display:block;font-size:15px;color:var(--muted);font-weight:500;letter-spacing:0}
+.plan .amt small{display:block;font-size:14px;line-height:1.4;color:var(--muted);font-weight:500;letter-spacing:0;min-height:4.2em;margin-top:4px}
 .plan ul{list-style:none;display:grid;gap:9px;margin:4px 0 8px}
 .plan li{display:flex;gap:10px;color:var(--muted);font-size:14.5px}
 .plan li::before{content:"✓";color:var(--accent)}
@@ -237,6 +244,16 @@ a.card:hover{border-color:var(--accent);transform:translateY(-3px);background:#0
 .facts dt{font-family:var(--mono);font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em}
 .facts dd{color:var(--text)}
 @media (max-width:860px){.case{grid-template-columns:1fr}.facts{position:static}}
+/* grid children may shrink below their content, so the case mock never widens the page */
+.case > *{min-width:0}
+.case-shot .kpis{grid-template-columns:repeat(3,minmax(0,1fr))}
+.case-shot .row{grid-template-columns:minmax(0,1.4fr) auto auto}
+.case-shot .row span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:520px){
+  .case-shot .kpi{padding:10px}
+  .case-shot .kpi b{font-size:clamp(14px,4.4vw,20px)}
+  .case-shot .kpi small{font-size:11px}
+}
 
 /* gates */
 .gates{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -254,16 +271,17 @@ form{display:grid;gap:16px}
 .field input,.field select,.field textarea{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--field-border);border-radius:12px;padding:13px 14px;font-size:16px;transition:border-color .15s}
 .field input:hover,.field select:hover,.field textarea:hover{border-color:#7d936f}
 .field ::placeholder,.field input::placeholder,.field textarea::placeholder{color:var(--faint)}
-.field [aria-invalid="true"]{border-color:#ff8a7a}
+.field [aria-invalid="true"],.field [aria-invalid="true"]:focus{border-color:#ff8a7a;box-shadow:0 0 0 3px rgba(255,138,122,.18)}
 .req{color:var(--accent)}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
-.field textarea{min-height:130px;resize:vertical}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field textarea{min-height:80px;resize:vertical}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
 @media (max-width:620px){.two{grid-template-columns:1fr}}
 .err{color:#ff8a7a;font-size:14px;font-weight:500}
 .err:empty{display:none}
-.sent{border:1px solid var(--accent);border-radius:var(--radius);padding:30px;background:rgba(182,246,63,.06)}
-.sent h3{margin-bottom:8px}
+.sent{border:1px solid var(--accent);border-radius:var(--radius);padding:30px;background:rgba(182,246,63,.06);scroll-margin-top:90px}
+.sent h2{margin-bottom:8px;font-size:22px;letter-spacing:-.4px;line-height:1.2}
+.sent h2:focus{outline:none}
 .reach{display:grid;gap:12px;align-content:start}
 .reach a.card{flex-direction:row;align-items:center;gap:14px;padding:18px}
 .reach small{display:block;color:var(--faint);font-size:12.5px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
@@ -273,21 +291,66 @@ form{display:grid;gap:16px}
 footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34px + env(safe-area-inset-bottom,0px));background:#070b08}
 .foot{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px}
 /* column headings lead the hierarchy: brighter, bolder and larger than the links under them */
-.foot h4{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-.2px;margin-bottom:6px}
-.foot h4 a{display:inline-flex;align-items:center;gap:8px;color:var(--text);font-size:17px}
-.foot h4 a::after{content:"→";color:var(--accent);opacity:0;transform:translateX(-4px);transition:.15s}
-.foot h4 a:hover{color:var(--accent)}
-.foot h4 a:hover::after{opacity:1;transform:none}
-.foot h4::before{content:"";display:block;width:22px;height:2px;background:var(--accent);margin-bottom:12px;border-radius:2px}
+.foot h2.fh{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-.2px;margin-bottom:6px}
+.foot h2.fh a{display:inline-flex;align-items:center;gap:8px;color:var(--text);font-size:17px;min-height:44px}
+.foot h2.fh a::after{content:"→";color:var(--accent);opacity:0;transform:translateX(-4px);transition:.15s}
+.foot h2.fh a:hover{color:var(--accent)}
+.foot h2.fh a:hover::after{opacity:1;transform:none}
+.foot h2.fh::before{content:"";display:block;width:22px;height:2px;background:var(--accent);margin-bottom:12px;border-radius:2px}
 .foot a{display:block;color:var(--muted);padding:11px 0;font-size:14.5px}
 .legal a{display:inline-block;padding:13px 0}
 .legal a:hover{color:var(--accent)}
 .foot a:hover{color:var(--accent)}
-.legal{margin-top:40px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--faint);font-size:13.5px}
-@media (max-width:760px){.foot{grid-template-columns:1fr 1fr}}
+.legal{margin-top:40px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;color:var(--faint);font-size:13.5px}
+@media (max-width:760px){.foot{grid-template-columns:1fr 1fr}.foot > div:first-child{grid-column:1/-1}}
 
-/* mockup marker */
-.mock-flag{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:60;font-family:var(--mono);font-size:11.5px;background:var(--warn);color:#1d1400;padding:6px 11px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+/* mockup marker — sits in the header beside the logo so it never covers content */
+.mock-tag{font-family:var(--mono);font-size:10.5px;background:var(--warn);color:#1d1400;padding:3px 8px;border-radius:999px;margin-left:10px;vertical-align:middle;white-space:nowrap}
+.brand{display:flex;align-items:center}
+
+/* phone: persistent primary action (header CTA is hidden under 520px) */
+.mbar{display:none}
+@media (max-width:520px){
+  .mbar{display:flex;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:55;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(4,6,10,.94);backdrop-filter:blur(12px);border-top:1px solid var(--border)}
+  .mbar .btn{padding:13px 16px;font-size:15px}
+  .mbar .btn-primary{flex:1;justify-content:center}
+  body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  body[data-page="contact"] .mbar,body.hero-cta-visible .mbar,body.menu-open .mbar{display:none}
+  body[data-page="contact"]{padding-bottom:0}
+  /* keyboard focus never hides under the sticky header or bottom bar (WCAG 2.4.11) */
+  html{scroll-padding-top:90px;scroll-padding-bottom:90px}
+  body.menu-open{overflow:hidden}
+}
+@media (max-width:360px){
+  .mbar .mbar-long{display:none}
+  .case-shot .kpi b{font-size:13px}
+}
+@media (min-width:361px){.mbar .mbar-short{display:none}}
+
+/* services jump-nav */
+.jump{position:sticky;top:calc(70px + env(safe-area-inset-top,0px));z-index:20;background:rgba(4,6,10,.94);backdrop-filter:blur(12px);box-shadow:0 8px 16px -12px rgba(0,0,0,.9);margin-bottom:8px}
+.jump .wrap{display:flex;gap:8px;overflow-x:auto;padding-block:12px;scrollbar-width:none}
+/* right-edge fade signals the strip scrolls sideways (only while it overflows) */
+.jump .wrap.overflows{-webkit-mask-image:linear-gradient(90deg,#000 82%,transparent);mask-image:linear-gradient(90deg,#000 82%,transparent)}
+.jump .wrap.overflows.at-end{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%);mask-image:linear-gradient(90deg,transparent,#000 14%)}
+.jump .wrap.overflows.mid{-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 85%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 85%,transparent)}
+.jump + .wrap > .svc:first-child{border-top:0}
+.jump .wrap::-webkit-scrollbar{display:none}
+.jump a{flex:none;padding:11px 16px;border-radius:999px;border:1px solid var(--border-soft);color:var(--muted);font-size:14.5px;font-weight:500;transition:.15s}
+.jump a:hover{border-color:var(--accent);color:var(--text)}
+.jump a.active{background:rgba(182,246,63,.1);border-color:var(--accent);color:var(--accent)}
+
+/* small product screens on cards and case pages */
+.mini{background:#0a0f0c;border:1px solid var(--border);border-radius:14px;padding:12px;display:grid;gap:7px;font-size:12.5px}
+.mini .r{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:8px 11px}
+.mini .r .mono{font-size:12px}
+.mini .bub{max-width:85%;padding:8px 11px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border)}
+.mini .bub.me{justify-self:end;background:rgba(182,246,63,.12);border-color:rgba(182,246,63,.3);color:var(--text)}
+.case-shot{margin-top:0}
+
+/* inline field errors */
+.fhint{font-size:13.5px;color:#ff8a7a}
+.fhint:empty{display:none}
 
 /* views */
 [data-view]{display:none}
@@ -302,7 +365,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
 <header>
   <div class="wrap">
     <nav aria-label="Main">
-      <a class="logo" href="#/home" aria-label="Tercet AI home">TERCET<span>.AI</span></a>
+      <div class="brand"><a class="logo" href="#/home" aria-label="Tercet AI home">TERCET<span>.AI</span></a><span class="mock-tag" title="Mockup, not the live site">MOCKUP</span></div>
       <div class="nav-links">
         <a href="#/services" data-nav="services">Services</a>
         <a href="#/products" data-nav="products">Products</a>
@@ -312,7 +375,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
       </div>
       <div class="nav-cta">
         <a class="btn btn-ghost" href="#/contact" data-nav="contact">Talk to us</a>
-        <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=nav" target="_blank" rel="noopener">Free mockup →</a>
+        <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_campaign=site-2026&amp;utm_content=nav" target="_blank" rel="noopener">Free mockup →<span class="sr-only"> (opens in new tab)</span></a>
         <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mmenu">☰</button>
       </div>
     </nav>
@@ -324,7 +387,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
     <a href="#/pricing" data-nav="pricing">Pricing</a>
     <a href="#/about" data-nav="about">About</a>
     <a href="#/contact" data-nav="contact">Talk to us</a>
-    <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=mobile-menu" target="_blank" rel="noopener">Get a free mockup →</a>
+    <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_campaign=site-2026&amp;utm_content=mobile-menu" target="_blank" rel="noopener">Get a free mockup →<span class="sr-only"> (opens in new tab)</span></a>
   </div>
 </header>
 
@@ -339,7 +402,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <h1>We build the systems your business runs on. <span class="g">And we prove they work.</span></h1>
         <p class="lead">POS, payroll, operations and AI assistants for growing companies. One team designs, builds, tests and runs them for you. Priced in pesos.</p>
         <div class="ctas">
-          <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=hero" target="_blank" rel="noopener">Get a free mockup of your system →</a>
+          <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_campaign=site-2026&amp;utm_content=hero" target="_blank" rel="noopener">Get a free mockup of your system →<span class="sr-only"> (opens in new tab)</span></a>
           <a class="btn btn-ghost" href="#/contact">Talk to us</a>
         </div>
         <p class="muted" style="font-size:14.5px;margin-bottom:12px;max-width:520px">Describe your system in a chat in Tercet Studio, our online design tool, and get a clickable mockup to show your team. The first one is free.</p>
@@ -387,22 +450,22 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
       </div>
       <div class="grid g4">
         <a class="card" href="#/products">
-          <div class="ico">▦</div><h3>Ready-made systems</h3>
+          <div class="ico" aria-hidden="true">▦</div><h3>Ready-made systems</h3>
           <p>Tercet POS and Tercet Payroll, set up for your business and run by us. No servers to buy.</p>
           <span class="price">From ₱1,500 / month</span>
         </a>
         <a class="card" href="#/services/custom">
-          <div class="ico">◧</div><h3>Custom systems</h3>
+          <div class="ico" aria-hidden="true">◧</div><h3>Custom systems</h3>
           <p>Operations, inventory, booking, portals: built around your real workflow and your rules.</p>
           <span class="more">Fixed quote after a free mockup →</span>
         </a>
         <a class="card" href="#/services/rescue">
-          <div class="ico">↻</div><h3>System rescue</h3>
+          <div class="ico" aria-hidden="true">↻</div><h3>System rescue</h3>
           <p>Stuck with an old system nobody can maintain? We extract your data and the computations, then rebuild it.</p>
           <span class="more">Even without the source code →</span>
         </a>
         <a class="card" href="#/services/ai">
-          <div class="ico">✦</div><h3>AI assistants</h3>
+          <div class="ico" aria-hidden="true">✦</div><h3>AI assistants</h3>
           <p>Ask your system in plain words, or let AI read POs, photos and PDFs straight into it.</p>
           <span class="more">See how it works →</span>
         </a>
@@ -452,7 +515,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <div style="max-width:640px">
           <span class="eyebrow">Our work</span>
           <h2>Real systems, in daily use.</h2>
-          <p class="lead">Client names are withheld for privacy. All of these systems are in daily use.</p>
+          <p class="lead">Client names are withheld for privacy. Here is what we built and what changed.</p>
         </div>
         <a class="link" href="#/work">All case studies →</a>
       </div>
@@ -477,7 +540,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <h2 style="margin-top:18px">Tell us what you're trying to fix.</h2>
         <p class="lead" style="margin:0 auto">We'll tell you honestly whether we can help, and you'll see a mockup before anyone talks about price.</p>
         <div class="ctas">
-          <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=home-cta" target="_blank" rel="noopener">Get a free mockup →</a>
+          <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_campaign=site-2026&amp;utm_content=home-cta" target="_blank" rel="noopener">Get a free mockup →<span class="sr-only"> (opens in new tab)</span></a>
           <a class="btn btn-ghost" href="#/contact">Talk to us</a>
         </div>
       </div>
@@ -492,6 +555,13 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
     <h1>One team, from first idea <span class="g">to running system.</span></h1>
     <p class="lead">No hand-offs between a designer, a developer and a “support company”. The people who build it also run it.</p>
   </div></div>
+  <nav class="jump" aria-label="Services on this page"><div class="wrap">
+    <a href="#/services/ready" data-jump="ready">Ready-made</a>
+    <a href="#/services/custom" data-jump="custom">Custom</a>
+    <a href="#/services/rescue" data-jump="rescue">Rescue</a>
+    <a href="#/services/ai" data-jump="ai">AI assistants</a>
+    <a href="#/services/qa" data-jump="qa">QA report</a>
+  </div></nav>
   <div class="wrap">
     <div class="svc" id="svc-ready">
       <div><span class="tag">01 · Ready-made</span><h2 style="font-size:36px;margin-top:10px">Systems that are already built</h2></div>
@@ -547,26 +617,41 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
   <div class="wrap">
     <h2 class="sr-only">Our products</h2>
     <div class="grid g3">
-      <div class="card product hoverable">
+      <div class="card product">
+        <div class="mini" aria-hidden="true">
+          <div class="r"><span>Iced lemonade · L</span><span class="mono">₱95 × 2</span></div>
+          <div class="r"><span>Cups (16oz)</span><span class="pill warn">Low: 40</span></div>
+          <div class="r"><span>Shift close · Cashier 2</span><span class="pill">Balanced</span></div>
+        </div>
         <span class="tag">Point of sale</span><h3>Tercet POS</h3>
         <p>For single stores up to multi-branch franchises, with a commissary.</p>
         <ul><li>Sales across every branch, live</li><li>Inventory, stock transfers, low-stock alerts</li><li>Recipes and production from the commissary</li><li>Cash shift open and close</li><li>“Ask” assistant over your sales data</li></ul>
         <div class="from">from <b>₱1,500</b> / month</div>
         <a class="btn btn-primary" href="#/contact?topic=pos">Book a demo →</a>
       </div>
-      <div class="card product hoverable">
+      <div class="card product">
+        <div class="mini" aria-hidden="true">
+          <div class="r"><span>Dela Cruz, J.</span><span class="mono">₱18,450</span></div>
+          <div class="r"><span>SSS · PhilHealth · Pag-IBIG</span><span class="pill teal">Computed</span></div>
+          <div class="r"><span>Payslips</span><span class="pill">102 / 102</span></div>
+        </div>
         <span class="tag">Payroll</span><h3>Tercet Payroll</h3>
         <p>For agencies and companies paying dozens to hundreds of staff.</p>
         <ul><li>SSS, PhilHealth, Pag-IBIG and withholding tax</li><li>Import timesheets, no retyping</li><li>Overtime, holiday and rest-day rules</li><li>Payslips for every employee in one run</li><li>Reports for remittance</li></ul>
         <div class="from">from <b>₱1,500</b> / month</div>
         <a class="btn btn-primary" href="#/contact?topic=payroll">Book a demo →</a>
       </div>
-      <div class="card product hoverable">
+      <div class="card product">
+        <div class="mini" aria-hidden="true">
+          <div class="bub me">I need stock counts for 6 branches</div>
+          <div class="bub">Here's a clickable mockup. Want a commissary tab too?</div>
+          <div class="r"><span>Mockup ready</span><span class="pill">Share link</span></div>
+        </div>
         <span class="tag">Design your system</span><h3>Tercet Studio</h3>
         <p>Describe the system you need in a chat and get a clickable mockup you can show your team.</p>
         <ul><li>First mockup free</li><li>Websites, web apps, dashboards, mobile</li><li>Shareable link and QR code</li><li>Pay as you go after that, price shown before every build</li></ul>
         <div class="from"><b>Free</b> to start</div>
-        <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=products" target="_blank" rel="noopener">Open Studio →</a>
+        <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_campaign=site-2026&amp;utm_content=products" target="_blank" rel="noopener">Open Studio →<span class="sr-only"> (opens in new tab)</span></a>
       </div>
     </div>
     <section style="padding:70px 0 0">
@@ -616,27 +701,27 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
   <div class="wrap">
     <h2 class="sr-only">Plans</h2>
     <div class="grid g4">
-      <div class="card plan hoverable">
+      <div class="card plan">
         <span class="tag">Try it</span><h3>Free mockup</h3>
-        <div class="amt">₱0</div>
+        <div class="amt">₱0<small>for your first mockup</small></div>
         <ul><li>Describe your system in a chat</li><li>Clickable mockup to share with your team</li><li>No credit card</li></ul>
-        <a class="btn btn-ghost" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=pricing" target="_blank" rel="noopener">Start in Studio</a>
+        <a class="btn btn-ghost" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_campaign=site-2026&amp;utm_content=pricing" target="_blank" rel="noopener">Start in Studio<span class="sr-only"> (opens in new tab)</span></a>
       </div>
       <div class="card plan feature">
-        <span class="tag">Most popular</span><h3>Ready-made</h3>
+        <span class="tag">Fastest to start</span><h3>Ready-made</h3>
         <div class="amt">₱1,500<small>a month and up, per business or per store depending on the system</small></div>
         <ul><li>Tercet POS or Tercet Payroll</li><li>Set up with your data</li><li>Hosting, backups, updates</li><li>Support from the team that built it</li></ul>
-        <a class="btn btn-primary" href="#/contact?topic=pos">Book a demo</a>
+        <a class="btn btn-primary" href="#/products">See POS &amp; Payroll</a>
       </div>
-      <div class="card plan hoverable">
+      <div class="card plan">
         <span class="tag">Custom</span><h3>Custom build</h3>
-        <div class="amt">Fixed quote</div>
+        <div class="amt">Fixed quote<small>agreed before we start</small></div>
         <ul><li>Free mockup and scoping first</li><li>Fixed scope, fixed price</li><li>Built and tested feature by feature</li><li>Monthly care plan after launch</li></ul>
         <a class="btn btn-ghost" href="#/contact?topic=custom">Get a quote</a>
       </div>
-      <div class="card plan hoverable">
-        <span class="tag">For firms</span><h3>Partner pilot</h3>
-        <div class="amt">1 month free</div>
+      <div class="card plan">
+        <span class="tag">Accounting &amp; law firms</span><h3>Partner pilot</h3>
+        <div class="amt">1 month free<small>then a monthly partnership</small></div>
         <ul><li>We sit with your team and find the slowest manual work</li><li>We fix the first piece, free</li><li>You keep everything from the pilot, even if you stop</li><li>Then a monthly partnership</li></ul>
         <a class="btn btn-ghost" href="#/contact?topic=pilot">Apply for a pilot</a>
       </div>
@@ -685,7 +770,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
       <div class="card" style="flex-direction:row;gap:24px;align-items:center;flex-wrap:wrap">
         <div style="width:84px;height:84px;border-radius:50%;background:var(--grad);display:grid;place-items:center;color:#0a1203;font-weight:700;font-size:28px">AR</div>
         <div style="flex:1;min-width:240px"><h3>Alfred Reloj</h3><p>President, Tercet AI Innovations Inc.</p><span class="todo">MOCKUP: photo + 2-line bio</span></div>
-        <a class="btn btn-ghost" href="https://alfred.tercetai.com" target="_blank" rel="noopener">Digital card →</a>
+        <a class="btn btn-ghost" href="https://alfred.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_campaign=site-2026&amp;utm_content=about" target="_blank" rel="noopener">Alfred's digital card ↗<span class="sr-only"> (opens in new tab)</span></a>
       </div>
     </section>
     <section style="padding-bottom:0">
@@ -693,7 +778,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <h2>Want to see how we'd build yours?</h2>
         <p class="lead" style="margin:0 auto">Start with a free mockup, or tell us what slows you down.</p>
         <div class="ctas">
-          <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=about" target="_blank" rel="noopener">Get a free mockup →</a>
+          <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_campaign=site-2026&amp;utm_content=about" target="_blank" rel="noopener">Get a free mockup →<span class="sr-only"> (opens in new tab)</span></a>
           <a class="btn btn-ghost" href="#/contact">Talk to us</a>
         </div>
       </div>
@@ -703,22 +788,22 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
 
 <!-- ═════════════════════════ CONTACT ═════════════════════════ -->
 <div data-view="contact">
-  <div class="page-head"><div class="wrap">
+  <div class="page-head page-head--compact"><div class="wrap">
     <div class="crumb"><a href="#/home">Home</a> / Contact</div>
     <h1>Tell us what <span class="g">slows you down.</span></h1>
-    <p class="lead">A few lines is enough. We'll reply with honest next steps, or tell you if we're not the right fit.</p>
+    <p class="lead">A few lines is enough. We'll reply with honest next steps, or tell you if we're not the right fit. Fields marked <span class="req">*</span> are required.</p>
   </div></div>
   <div class="wrap contact">
     <div>
+      <h2 class="sr-only">Send us a message</h2>
       <form id="form" novalidate>
-        <p class="muted" style="font-size:14px"><span class="req">*</span> Required</p>
         <p class="err" id="ferr" role="alert"></p>
         <div class="two">
-          <div class="field"><label for="f-name">Your name <span class="req" aria-hidden="true">*</span></label><input id="f-name" name="name" autocomplete="name" required aria-describedby="ferr"></div>
+          <div class="field"><label for="f-name">Your name <span class="req" aria-hidden="true">*</span></label><input id="f-name" name="name" autocomplete="name" required aria-describedby="h-name"><span class="fhint" id="h-name"></span></div>
           <div class="field"><label for="f-biz">Business name</label><input id="f-biz" name="biz" autocomplete="organization"></div>
         </div>
         <div class="two">
-          <div class="field"><label for="f-phone">Mobile or Viber <span class="req" aria-hidden="true">*</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="09XX XXX XXXX" required aria-describedby="ferr"></div>
+          <div class="field"><label for="f-phone">Mobile or Viber <span class="req" aria-hidden="true">*</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="09XX XXX XXXX" required aria-describedby="h-phone"><span class="fhint" id="h-phone"></span></div>
           <div class="field"><label for="f-email">Email (optional)</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
         </div>
         <div class="field"><label for="f-topic">What do you need?</label>
@@ -737,19 +822,20 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <button class="btn btn-primary" type="submit" style="justify-self:start">Send message →</button>
       </form>
       <div class="sent" id="sent" hidden>
-        <h3 id="sentHead" tabindex="-1">Thanks, <span id="sentName"></span>. We've got it.</h3>
+        <h2 id="sentHead" tabindex="-1">Thanks, <span id="sentName"></span>. We've got it.</h2>
         <p class="muted">We'll message you on <span id="sentPhone" class="mono"></span>. In the meantime you can sketch your system for free in Studio.</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
-          <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=contact-sent" target="_blank" rel="noopener">Open Studio →</a>
+          <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_campaign=site-2026&amp;utm_content=contact-sent" target="_blank" rel="noopener">Open Studio →<span class="sr-only"> (opens in new tab)</span></a>
           <button class="btn btn-ghost" id="again" type="button">Send another</button>
         </div>
         <span class="todo">MOCKUP: on the real site this goes to hello@tercetai.com</span>
       </div>
     </div>
     <div class="reach">
-      <a class="card" href="mailto:hello@tercetai.com"><div class="ico">✉</div><div><small>Email</small>hello@tercetai.com</div></a>
-      <a class="card" href="tel:+639173153590"><div class="ico">☏</div><div><small>Call or Viber</small>+63 917 315 3590</div></a>
-      <a class="card" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=contact-side" target="_blank" rel="noopener"><div class="ico">◧</div><div><small>Prefer to show, not tell?</small>Build a free mockup in Studio</div></a>
+      <a class="card" href="mailto:hello@tercetai.com"><div class="ico" aria-hidden="true">✉</div><div><small>Email</small>hello@tercetai.com</div></a>
+      <a class="card" href="tel:+639173153590"><div class="ico" aria-hidden="true">☏</div><div><small>Call</small>+63 917 315 3590</div></a>
+      <a class="card" href="viber://chat?number=%2B639173153590"><div class="ico" aria-hidden="true">✆</div><div><small>Viber</small>Chat with us on Viber</div></a>
+      <a class="card" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_campaign=site-2026&amp;utm_content=contact-side" target="_blank" rel="noopener"><div class="ico" aria-hidden="true">◧</div><div><small>Prefer to show, not tell?</small>Build a free mockup in Studio</div><span class="sr-only"> (opens in new tab)</span></a>
     </div>
   </div>
 </div>
@@ -763,15 +849,19 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <a class="logo" href="#/home" style="display:inline-block;margin-bottom:12px">TERCET<span>.AI</span></a>
         <p class="muted" style="font-size:15px;max-width:340px">Systems for Philippine businesses, built, tested and run by one team.</p>
       </div>
-      <div><h4><a href="#/services">Services</a></h4><a href="#/services/custom">Custom systems</a><a href="#/services/rescue">System rescue</a><a href="#/services/ai">AI assistants</a><a href="#/services/qa">QA reports</a></div>
-      <div><h4><a href="#/products">Products</a></h4><a href="#/products">Tercet POS</a><a href="#/products">Tercet Payroll</a><a href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=footer" target="_blank" rel="noopener">Tercet Studio</a></div>
-      <div><h4><a href="#/about">Company</a></h4><a href="#/about">About</a><a href="#/work">Our work</a><a href="#/pricing">Pricing</a><a href="#/contact">Contact</a></div>
+      <div><h2 class="fh"><a href="#/services">Services</a></h2><a href="#/services/custom">Custom systems</a><a href="#/services/rescue">System rescue</a><a href="#/services/ai">AI assistants</a><a href="#/services/qa">QA reports</a></div>
+      <div><h2 class="fh"><a href="#/products">Products</a></h2><a href="#/products">Tercet POS</a><a href="#/products">Tercet Payroll</a><a href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_campaign=site-2026&amp;utm_content=footer" target="_blank" rel="noopener">Tercet Studio<span class="sr-only"> (opens in new tab)</span></a></div>
+      <div><h2 class="fh"><a href="#/about">Company</a></h2><a href="#/about">About</a><a href="#/work">Our work</a><a href="#/pricing">Pricing</a><a href="#/contact">Contact</a></div>
     </div>
     <div class="legal"><span>© 2026 Tercet AI Innovations Inc.</span><span><a href="mailto:hello@tercetai.com">hello@tercetai.com</a> · <a href="tel:+639173153590">+63 917 315 3590</a></span></div>
   </div>
 </footer>
 
-<div class="mock-flag">MOCKUP · not the live site</div>
+
+<div class="mbar">
+  <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_campaign=site-2026&amp;utm_content=mobile-bar" target="_blank" rel="noopener"><span class="mbar-long">Get a free mockup →</span><span class="mbar-short">Free mockup →</span><span class="sr-only"> (opens in new tab)</span></a>
+  <a class="btn btn-ghost" href="#/contact">Talk to us</a>
+</div>
 
 <script>
 /* ── Case-study content (names withheld) ─────────────────────── */
@@ -783,7 +873,9 @@ const CASES = [
     result:'Every branch on one system, with head office seeing the business live. Accounting is moving onto the same system next.',
     outcome:'All branches on <b>one live system</b>',
     facts:[['Industry','Food & beverage franchise'],['Product','Tercet POS + custom modules'],['Users','Owners, managers, cashiers, commissary'],['Status','Live, expanding']],
-    thumb:['Sales today','₱184,320','pill','9 branches open'] },
+    thumb:['Sales today','₱184,320','pill','9 branches open'],
+    screen:{ url:'pos / head office', kpis:[['Sales today','₱184,320'],['Branches open','9 / 9'],['Low stock','3 items']],
+      rows:[['SM Seaside','₱32,410','pill','Open'],['Commissary','240 L made','pill teal','Production'],['Cups (16oz)','40 left','pill warn','Reorder']] } },
   { id:'orders', topic:'ai', tag:'Distribution', title:'Purchase orders that type themselves',
     lead:'A distributor received customer POs as PDFs, photos and emails. Staff re-typed every line into the company ERP.',
     challenge:'Re-typing hundreds of lines a day was slow and error-prone, and the existing ERP couldn\'t be replaced.',
@@ -791,7 +883,9 @@ const CASES = [
     result:'Live on 5 PCs across head office and a branch. Staff check orders instead of typing them.',
     outcome:'Live on <b>5 PCs</b> across 2 offices',
     facts:[['Industry','Distribution'],['Service','AI assistant + integration'],['Works with','Client\'s existing ERP'],['Status','Live']],
-    thumb:['PO → Sales order','42 lines','pill teal','Read in 20s'] },
+    thumb:['PO → Sales order','42 lines','pill teal','Read in 20s'],
+    screen:{ url:'orders / review', kpis:[['POs today','18'],['Lines read','612'],['Waiting review','2']],
+      rows:[['PO-88214.pdf','42 lines','pill','Matched'],['Photo · WhatsApp','9 lines','pill warn','Check 1 item'],['Email order','15 lines','pill teal','Posted']] } },
   { id:'payroll', topic:'payroll', tag:'Manpower agency', title:'Payroll for 100 hotel staff, off spreadsheets',
     lead:'A manpower agency paid about 100 staff deployed to hotels from spreadsheets, with every rule worked out by hand.',
     challenge:'Different schedules, rest days and statutory deductions per employee made every payroll run slow and risky.',
@@ -799,7 +893,9 @@ const CASES = [
     result:'The team now runs payroll themselves, a job that used to depend on one person and a spreadsheet.',
     outcome:'<b>102 payslips</b> in one run',
     facts:[['Industry','Staffing / hospitality'],['Product','Tercet Payroll'],['Employees','~100'],['Status','Live']],
-    thumb:['April payroll','₱1.84M','pill','102 / 102 payslips'] },
+    thumb:['April payroll','₱1.84M','pill','102 / 102 payslips'],
+    screen:{ url:'payroll / april run', kpis:[['Net pay','₱1.84M'],['Employees','102'],['Payslips','102 / 102']],
+      rows:[['Dela Cruz, J.','₱18,450','pill','Computed'],['Santos, M.','₱16,200','pill','Computed'],['SSS · PhilHealth · Pag-IBIG','Ready','pill teal','Remit']] } },
   { id:'ctpl', topic:'custom', tag:'Insurance', title:'Motor insurance, bought and issued online',
     lead:'Compulsory motor insurance was sold over the counter, with manual forms and payment confirmation by phone.',
     challenge:'Sellers needed to issue policies fast, take payment on the spot, and be sure every certificate was genuine.',
@@ -807,7 +903,9 @@ const CASES = [
     result:'Policies issued in minutes, paid for online, and verifiable by scanning a QR code.',
     outcome:'Issued and paid <b>in minutes</b>',
     facts:[['Industry','Insurance'],['Service','Custom system + payments'],['Payments','QR Ph'],['Status','Live']],
-    thumb:['Policy issued','Paid · QR Ph','pill teal','Verified ✓'] }
+    thumb:['Policy issued','Paid · QR Ph','pill teal','Verified ✓'],
+    screen:{ url:'policies / issue', kpis:[['Issued today','27'],['Paid by QR Ph','27'],['Verified scans','11']],
+      rows:[['ABC 1234 · Sedan','₱560','pill','Paid'],['Certificate','Generated','pill teal','QR verify'],['XYZ 9876 · Motorcycle','₱255','pill warn','Awaiting pay']] } }
 ];
 
 /* ── Card rendering ──────────────────────────────────────────── */
@@ -835,7 +933,12 @@ function renderCase(id){
   document.getElementById('caseTitle').textContent = c.title;
   document.getElementById('caseLead').textContent = c.lead;
   document.getElementById('caseBody').innerHTML =
-    `<h2>The problem</h2><p>${c.challenge}</p>
+    `<div class="screen case-shot" aria-hidden="true"><div class="screen-bar"><i></i><i></i><i></i><span>${c.screen.url}</span></div>
+       <div class="screen-body">
+         <div class="kpis">${c.screen.kpis.map(k=>`<div class="kpi"><small>${k[0]}</small><b>${k[1]}</b></div>`).join('')}</div>
+         <div class="rows">${c.screen.rows.map(r=>`<div class="row"><span>${r[0]}</span><span class="mono">${r[1]}</span><span class="${r[2]}">${r[3]}</span></div>`).join('')}</div>
+       </div></div>
+     <h2>The problem</h2><p>${c.challenge}</p>
      <h2>What we built</h2><ul>${c.built.map(b=>`<li>${b}</li>`).join('')}</ul>
      <h2>The result</h2><p>${c.result}</p>`;
   document.getElementById('caseFacts').innerHTML = c.facts.map(f=>`<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('');
@@ -862,9 +965,20 @@ function route(){
   const [path, query] = raw.split('?');
   const [view, sub] = path.split('/');
   let target = view, scrollTo = null;
-  if(view === 'work' && sub){ target = renderCase(sub) ? 'case' : 'work'; }
-  if(view === 'services' && sub){ scrollTo = 'svc-'+sub; }
-  if(!views.some(v => v.dataset.view === target)) target = 'home';
+  if(view === 'work' && sub){
+    target = renderCase(sub) ? 'case' : 'work';
+    if(target === 'work') history.replaceState(null, '', '#/work'); // unknown case: fix the address
+  }
+  if(view === 'services' && sub){
+    if(document.getElementById('svc-'+sub)) scrollTo = 'svc-'+sub;
+    else history.replaceState(null, '', '#/services');
+  }
+  if(!views.some(v => v.dataset.view === target)){
+    // Unknown route: show Home and correct the address so it isn't shared or bookmarked broken.
+    target = 'home'; history.replaceState(null, '', '#/home');
+  }
+  // Leaving Contact clears a sent confirmation so the form is ready next time.
+  if(target !== 'contact' && !sent.hidden) resetForm(false);
   views.forEach(v => v.classList.toggle('on', v.dataset.view === target));
   const navKey = target === 'case' ? 'work' : target;
   document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('active', a.dataset.nav === navKey));
@@ -875,18 +989,59 @@ function route(){
     sel.value = [...sel.options].some(o => o.value === t) ? t : 'other';
   }
   document.title = TITLES[target];
+  document.body.dataset.page = target;
+  setActiveChip(target === 'services' ? sub : null);
   setMenu(false);
-  const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-  if(scrollTo){ requestAnimationFrame(()=>document.getElementById(scrollTo)?.scrollIntoView({behavior})); }
-  else window.scrollTo(0,0);
-  // Move focus to the new page's heading so keyboard and screen-reader users land on the new content.
+  updateMbar();
+  // 'instant' overrides the CSS smooth-scroll so page jumps land reliably and respect reduced motion.
+  const section = scrollTo && document.getElementById(scrollTo);
+  if(section){ setTimeout(()=>section.scrollIntoView({behavior:'instant'}), 0); }
+  else window.scrollTo({top:0, behavior:'instant'});
+  // Move focus to the heading the visitor lands on (section heading for #/services/<x>, else the page H1).
   if(!firstRoute){
-    const h1 = document.querySelector('[data-view].on h1');
-    if(h1){ h1.setAttribute('tabindex','-1'); h1.focus({preventScroll:true}); }
+    const h = section ? section.querySelector('h2') : document.querySelector('[data-view].on h1');
+    if(h){ h.setAttribute('tabindex','-1'); h.focus({preventScroll:true}); }
   }
   firstRoute = false;
 }
 window.addEventListener('hashchange', route);
+
+/* ── Services jump strip: active chip kept in view, edge fade, scrollspy ── */
+const jumpWrap = document.querySelector('.jump .wrap');
+function setActiveChip(id){
+  let active = null;
+  document.querySelectorAll('[data-jump]').forEach(a => {
+    const on = a.dataset.jump === id; a.classList.toggle('active', on); if(on) active = a;
+  });
+  // Scroll only the strip sideways (not the page) so the active chip is visible on phones.
+  if(active) jumpWrap.scrollLeft = active.offsetLeft - 16;
+  updateJumpFade();
+}
+function updateJumpFade(){
+  const over = jumpWrap.scrollWidth > jumpWrap.clientWidth + 2;
+  jumpWrap.classList.toggle('overflows', over);
+  const atEnd = jumpWrap.scrollLeft + jumpWrap.clientWidth >= jumpWrap.scrollWidth - 4;
+  jumpWrap.classList.toggle('at-end', atEnd);
+  jumpWrap.classList.toggle('mid', !atEnd && jumpWrap.scrollLeft > 4);
+}
+jumpWrap.addEventListener('scroll', updateJumpFade, {passive:true});
+window.addEventListener('resize', updateJumpFade);
+// Highlight the section the visitor is reading as they scroll (no URL change).
+const spy = new IntersectionObserver(entries => {
+  if(document.body.dataset.page !== 'services') return;
+  entries.forEach(e => { if(e.isIntersecting) setActiveChip(e.target.id.replace('svc-','')); });
+}, {rootMargin:'-160px 0px -60% 0px'});
+document.querySelectorAll('.svc').forEach(s => spy.observe(s));
+
+/* ── Phone bottom bar: hidden while the hero's own buttons are on screen ── */
+const heroCtas = document.querySelector('.hero .ctas');
+function updateMbar(){
+  const r = heroCtas.getBoundingClientRect();
+  const visible = document.body.dataset.page === 'home' && r.bottom > 70 && r.top < innerHeight;
+  document.body.classList.toggle('hero-cta-visible', visible);
+}
+window.addEventListener('scroll', updateMbar, {passive:true});
+setInterval(updateMbar, 500); // safety net: scroll events are throttled in background/embedded views
 
 /* ── Skip link: focus the current page's heading without touching the URL ── */
 document.querySelector('.skip').addEventListener('click', e => {
@@ -899,9 +1054,12 @@ document.querySelector('.skip').addEventListener('click', e => {
 const burger = document.getElementById('burger'), mmenu = document.getElementById('mmenu');
 function setMenu(open){
   mmenu.classList.toggle('open', open); burger.setAttribute('aria-expanded', open);
+  document.body.classList.toggle('menu-open', open);
   burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu'); burger.textContent = open ? '✕' : '☰';
 }
 burger.addEventListener('click', () => setMenu(!mmenu.classList.contains('open')));
+// Tapping the link for the page you're already on fires no hashchange, so close the menu here too.
+mmenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
 document.addEventListener('keydown', e => {
   if(e.key === 'Escape' && mmenu.classList.contains('open')){ setMenu(false); burger.focus(); }
 });
@@ -915,9 +1073,12 @@ form.addEventListener('submit', e => {
   // Name + a reachable number are the minimum a seller needs to follow up.
   const nameBad = !name, phoneBad = phone.replace(/\D/g,'').length < 10;
   nameEl.setAttribute('aria-invalid', nameBad); phoneEl.setAttribute('aria-invalid', phoneBad);
+  // Message under each field it belongs to, plus one summary line announced to screen readers.
+  document.getElementById('h-name').textContent = nameBad ? 'Please add your name.' : '';
+  document.getElementById('h-phone').textContent = phoneBad ? 'Please add a mobile number with at least 10 digits.' : '';
   if(nameBad || phoneBad){
     ferr.textContent = nameBad && phoneBad ? 'Please add your name and a mobile number so we can reach you.'
-      : nameBad ? 'Please add your name.' : 'Please add a mobile number with at least 10 digits.';
+      : nameBad ? 'Please add your name.' : 'Please check your mobile number.';
     (nameBad ? nameEl : phoneEl).focus();
     return;
   }
@@ -925,15 +1086,27 @@ form.addEventListener('submit', e => {
   document.getElementById('sentName').textContent = name.split(' ')[0];
   document.getElementById('sentPhone').textContent = phone;
   form.hidden = true; sent.hidden = false;
-  // Bring the confirmation into view and focus it so it is seen and announced.
-  sent.scrollIntoView({block:'start', behavior:'auto'}); window.scrollBy(0, -90);
+  // Bring the confirmation into view below the sticky header (scroll-margin) and focus it so it is seen and announced.
+  sent.scrollIntoView({block:'start', behavior:'instant'});
   document.getElementById('sentHead').focus({preventScroll:true});
 });
-document.getElementById('again').addEventListener('click', () => {
+// Fixing a field clears its own message, and the summary once nothing is left to fix.
+['name','phone'].forEach(k => form.elements[k].addEventListener('input', () => {
+  const el = form.elements[k], ok = k === 'name' ? !!el.value.trim() : el.value.replace(/\D/g,'').length >= 10;
+  if(ok && el.getAttribute('aria-invalid') === 'true'){
+    el.setAttribute('aria-invalid', 'false'); document.getElementById('h-'+k).textContent = '';
+    if(![...form.querySelectorAll('[aria-invalid="true"]')].length) ferr.textContent = '';
+  }
+}));
+function resetForm(focus){
+  const topic = document.getElementById('f-topic').value;
   form.reset(); form.hidden = false; sent.hidden = true;
+  document.getElementById('f-topic').value = topic; // keep the routed topic, not the first <option>
   form.elements.name.removeAttribute('aria-invalid'); form.elements.phone.removeAttribute('aria-invalid');
-  form.elements.name.focus();
-});
+  document.getElementById('h-name').textContent = ''; document.getElementById('h-phone').textContent = ''; ferr.textContent = '';
+  if(focus) form.elements.name.focus();
+}
+document.getElementById('again').addEventListener('click', () => resetForm(true));
 
 route();
 </script>
