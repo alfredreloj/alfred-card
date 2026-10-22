@@ -12,6 +12,7 @@
 -->
 <title>Tercet AI — systems your business runs on (mockup)</title>
 <meta name="description" content="Tercet AI builds and runs POS, payroll, operations and AI systems for growing Philippine businesses — tested before they go live.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2304060a'/%3E%3Ctext x='16' y='23' font-family='Arial' font-weight='700' font-size='19' text-anchor='middle' fill='%23b6f63f'%3ET%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
@@ -22,6 +23,9 @@
   --text:#eef4ec; --muted:#9aae93; --faint:#7d8d75;
   --accent:#b6f63f; --teal:#46e0b0; --grad:linear-gradient(120deg,#b6f63f,#46e0b0);
   --warn:#f5c04a;
+  /* form controls need ≥3:1 boundary contrast (WCAG 1.4.11); card borders stay decorative */
+  --field-border:#5c7052;
+  color-scheme:dark;
   --font:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"Space Mono",ui-monospace,monospace;
   --radius:18px; --max:1180px;
 }
@@ -31,6 +35,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font
 a{color:inherit;text-decoration:none}
 img{max-width:100%}
 [hidden]{display:none!important}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;background:var(--accent);color:#0a1203;padding:10px 16px;border-radius:999px;font-weight:600}
+.skip:focus{top:12px}
+h1[tabindex]:focus,h3[tabindex]:focus{outline:none}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .wrap{max-width:var(--max);margin:0 auto;padding-inline:22px}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -52,14 +60,16 @@ section{padding:96px 0}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px -8px rgba(182,246,63,.55)}
 .btn-ghost{border-color:var(--border-soft);color:var(--text);background:rgba(255,255,255,.02)}
 .btn-ghost:hover{border-color:var(--accent);background:rgba(182,246,63,.07)}
-.link{color:var(--accent);font-weight:600;display:inline-flex;gap:6px;align-items:center}
+.link{color:var(--accent);font-weight:600;display:inline-flex;gap:6px;align-items:center;min-height:44px}
 .link:hover{text-decoration:underline;text-underline-offset:4px}
 
 /* ── Header ─────────────────────────────────────────────────── */
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(4,6,10,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
 nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
-.logo{font-weight:800;font-size:21px;letter-spacing:-.5px}
+.logo{font-weight:700;font-size:21px;letter-spacing:-.5px;padding:11px 0;transition:opacity .15s}
+.logo:hover{opacity:.85}
 .logo span{color:var(--accent)}
+.nav-cta .btn-ghost.active{border-color:var(--accent);background:rgba(182,246,63,.1)}
 .nav-links{display:flex;gap:6px;align-items:center}
 .nav-links a{padding:9px 13px;border-radius:999px;color:var(--muted);font-size:15px;font-weight:500;transition:.15s}
 .nav-links a:hover{color:var(--text);background:rgba(255,255,255,.05)}
@@ -74,13 +84,16 @@ nav{display:flex;align-items:center;justify-content:space-between;height:70px;ga
   .mmenu.open{display:flex;flex-direction:column;gap:4px;padding:10px 22px 22px;border-bottom:1px solid var(--border)}
   .mmenu a{padding:13px 10px;border-radius:12px;font-size:17px}
   .mmenu a:hover,.mmenu a.active{background:rgba(182,246,63,.08);color:var(--accent)}
+  .mmenu a.btn-primary{margin-top:8px;justify-content:center;color:#0a1203;background:var(--accent)}
 }
 @media (max-width:520px){.nav-cta .btn-primary{display:none}}
 
 /* ── Hero ───────────────────────────────────────────────────── */
-.hero{padding:84px 0 70px;position:relative;overflow:hidden}
+.hero{padding:72px 0 70px;position:relative;overflow:hidden}
+.hero h1{font-size:clamp(40px,5.2vw,68px)}
+@media (max-width:520px){.hero{padding-top:40px}}
 .hero::before{content:"";position:absolute;inset:-30% -10% auto;height:620px;background:radial-gradient(closest-side,rgba(182,246,63,.16),transparent 70%),radial-gradient(closest-side at 70% 60%,rgba(70,224,176,.12),transparent 70%);pointer-events:none}
-.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:52px;align-items:center}
 .hero h1{margin:22px 0 22px}
 .hero .ctas{display:flex;gap:12px;flex-wrap:wrap;margin:32px 0 18px}
 .hero .fine{font-size:14px;color:var(--faint);display:flex;gap:18px;flex-wrap:wrap}
@@ -127,7 +140,7 @@ nav{display:flex;align-items:center;justify-content:space-between;height:70px;ga
 @media (max-width:860px){.g3,.g2{grid-template-columns:1fr}}
 @media (max-width:560px){.g4{grid-template-columns:1fr}}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px;display:flex;flex-direction:column;gap:12px;transition:border-color .2s,transform .2s,background .2s}
-a.card:hover,.card.hoverable:hover{border-color:var(--accent);transform:translateY(-3px);background:#0e1512}
+a.card:hover{border-color:var(--accent);transform:translateY(-3px);background:#0e1512}
 .card .ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:rgba(182,246,63,.09);color:var(--accent)}
 .card p{color:var(--muted);font-size:15.5px}
 .card .price{font-family:var(--mono);font-size:13px;color:var(--accent);margin-top:auto;padding-top:6px}
@@ -172,13 +185,15 @@ a.card:hover,.card.hoverable:hover{border-color:var(--accent);transform:translat
 .page-head{padding:72px 0 30px}
 .page-head h1{font-size:clamp(36px,5.4vw,64px);margin:18px 0 16px}
 .crumb{font-family:var(--mono);font-size:12.5px;color:var(--faint)}
+.crumb a{display:inline-block;padding:13px 4px;margin:-13px -4px}
 .crumb a:hover{color:var(--accent)}
 
 /* service rows */
 .svc{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;padding:44px 0;border-top:1px solid var(--border);scroll-margin-top:90px}
 .svc ul{list-style:none;display:grid;gap:10px;margin-top:6px}
-.svc li{display:flex;gap:10px;color:var(--muted)}
-.svc li::before{content:"→";color:var(--accent)}
+/* block + absolute arrow so mixed <b>/text items wrap as one paragraph */
+.svc li{display:block;position:relative;padding-left:1.5em;color:var(--muted)}
+.svc li::before{content:"→";color:var(--accent);position:absolute;left:0}
 .svc .for{font-size:14px;color:var(--faint);margin-top:16px}
 @media (max-width:860px){.svc{grid-template-columns:1fr;gap:18px}}
 
@@ -188,14 +203,14 @@ a.card:hover,.card.hoverable:hover{border-color:var(--accent);transform:translat
 .product ul{list-style:none;display:grid;gap:8px}
 .product li{display:flex;gap:10px;color:var(--muted);font-size:15px}
 .product li::before{content:"✓";color:var(--accent)}
-.product .from{font-size:15px;color:var(--muted)}
+.product .from{font-size:15px;color:var(--muted);margin-top:auto}
 .product .from b{font-size:30px;color:var(--text);letter-spacing:-1px}
 
 /* pricing */
 .plan{gap:14px}
 .plan.feature{border-color:var(--accent);box-shadow:0 0 0 1px rgba(182,246,63,.25),0 30px 60px -30px rgba(182,246,63,.35)}
 .plan .amt{font-size:34px;font-weight:700;letter-spacing:-1px}
-.plan .amt small{font-size:15px;color:var(--muted);font-weight:500;letter-spacing:0}
+.plan .amt small{display:block;font-size:15px;color:var(--muted);font-weight:500;letter-spacing:0}
 .plan ul{list-style:none;display:grid;gap:9px;margin:4px 0 8px}
 .plan li{display:flex;gap:10px;color:var(--muted);font-size:14.5px}
 .plan li::before{content:"✓";color:var(--accent)}
@@ -214,7 +229,7 @@ a.card:hover,.card.hoverable:hover{border-color:var(--accent);transform:translat
 
 /* case detail */
 .case{display:grid;grid-template-columns:1.4fr .8fr;gap:44px}
-.case h3{margin:30px 0 10px;font-size:22px}
+.case h2{margin:30px 0 10px;font-size:22px;letter-spacing:-.4px;line-height:1.2}
 .case p,.case li{color:var(--muted);font-size:16.5px}
 .case ul{padding-left:20px;display:grid;gap:8px}
 .facts{position:sticky;top:96px;align-self:start}
@@ -236,8 +251,11 @@ a.card:hover,.card.hoverable:hover{border-color:var(--accent);transform:translat
 form{display:grid;gap:16px}
 .field{display:grid;gap:7px}
 .field label{font-size:14px;color:var(--muted);font-weight:500}
-.field input,.field select,.field textarea{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--border-soft);border-radius:12px;padding:13px 14px;font-size:16px;transition:border-color .15s}
-.field input:hover,.field select:hover,.field textarea:hover{border-color:#3a4d2c}
+.field input,.field select,.field textarea{font:inherit;color:var(--text);background:var(--surface);border:1px solid var(--field-border);border-radius:12px;padding:13px 14px;font-size:16px;transition:border-color .15s}
+.field input:hover,.field select:hover,.field textarea:hover{border-color:#7d936f}
+.field ::placeholder,.field input::placeholder,.field textarea::placeholder{color:var(--faint)}
+.field [aria-invalid="true"]{border-color:#ff8a7a}
+.req{color:var(--accent)}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
 .field textarea{min-height:130px;resize:vertical}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
@@ -254,7 +272,9 @@ form{display:grid;gap:16px}
 footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34px + env(safe-area-inset-bottom,0px));background:#070b08}
 .foot{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:30px}
 .foot h4{font-family:var(--mono);font-size:12px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;font-weight:400}
-.foot a{display:block;color:var(--muted);padding:4px 0;font-size:15px}
+.foot a{display:block;color:var(--muted);padding:11px 0;font-size:15px}
+.legal a{display:inline-block;padding:13px 0}
+.legal a:hover{color:var(--accent)}
 .foot a:hover{color:var(--accent)}
 .legal{margin-top:40px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--faint);font-size:13.5px}
 @media (max-width:760px){.foot{grid-template-columns:1fr 1fr}}
@@ -266,10 +286,11 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
 [data-view]{display:none}
 [data-view].on{display:block;animation:fade .25s ease}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
 <header>
   <div class="wrap">
@@ -283,9 +304,9 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <a href="#/about" data-nav="about">About</a>
       </div>
       <div class="nav-cta">
-        <a class="btn btn-ghost" href="#/contact">Talk to us</a>
-        <a class="btn btn-primary" href="https://studio.tercetai.com" target="_blank" rel="noopener">Free mockup →</a>
-        <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
+        <a class="btn btn-ghost" href="#/contact" data-nav="contact">Talk to us</a>
+        <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=nav" target="_blank" rel="noopener">Free mockup →</a>
+        <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mmenu">☰</button>
       </div>
     </nav>
   </div>
@@ -296,11 +317,11 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
     <a href="#/pricing" data-nav="pricing">Pricing</a>
     <a href="#/about" data-nav="about">About</a>
     <a href="#/contact" data-nav="contact">Talk to us</a>
-    <a href="https://studio.tercetai.com" target="_blank" rel="noopener">Get a free mockup →</a>
+    <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=mobile-menu" target="_blank" rel="noopener">Get a free mockup →</a>
   </div>
 </header>
 
-<main>
+<main id="main">
 
 <!-- ═════════════════════════ HOME ═════════════════════════ -->
 <div data-view="home">
@@ -311,9 +332,10 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <h1>We build the systems your business runs on. <span class="g">And we prove they work.</span></h1>
         <p class="lead">POS, payroll, operations and AI assistants for growing companies. One team designs, builds, tests and runs them for you. Priced in pesos.</p>
         <div class="ctas">
-          <a class="btn btn-primary" href="https://studio.tercetai.com" target="_blank" rel="noopener">Get a free mockup of your system →</a>
+          <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=hero" target="_blank" rel="noopener">Get a free mockup of your system →</a>
           <a class="btn btn-ghost" href="#/contact">Talk to us</a>
         </div>
+        <p class="muted" style="font-size:14.5px;margin-bottom:12px;max-width:520px">Describe your system in a chat in Tercet Studio, our online design tool, and get a clickable mockup to show your team. The first one is free.</p>
         <div class="fine"><span><b>See it before you pay</b></span><span>Fixed price, no hourly billing</span><span>Local support</span></div>
       </div>
       <div class="screen" aria-hidden="true">
@@ -339,7 +361,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <div class="stat"><b>12+</b><span>systems running in production</span></div>
         <div class="stat"><b>6</b><span>industries served</span></div>
         <div class="stat"><b>9</b><span>checks every system passes before it goes live</span></div>
-        <div class="stat"><b>₱1,500</b><span>/ month: ready-made systems start here</span></div>
+        <div class="stat"><b>₱1,500</b><span>a month: where ready-made systems start</span></div>
       </div>
     </div>
   </section>
@@ -410,7 +432,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
       </div>
       <div class="steps">
         <div class="step"><span class="pill free">Free</span><h3>Tell us</h3><p>A short call or chat about what slows your business down.</p></div>
-        <div class="step"><span class="pill free">Free</span><h3>See it</h3><p>You get a clickable mockup of your system within days. Click through it with your team.</p></div>
+        <div class="step"><span class="pill free">Free</span><h3>See it</h3><p>You get a clickable mockup of your system. Click through it with your team before deciding anything.</p></div>
         <div class="step"><h3>We build</h3><p>One feature at a time. Each one is tested end to end before the next starts.</p></div>
         <div class="step"><h3>We run it</h3><p>Hosting, updates and support for one monthly fee. You run your business.</p></div>
       </div>
@@ -448,7 +470,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <h2 style="margin-top:18px">Tell us what you're trying to fix.</h2>
         <p class="lead" style="margin:0 auto">We'll tell you honestly whether we can help, and you'll see a mockup before anyone talks about price.</p>
         <div class="ctas">
-          <a class="btn btn-primary" href="https://studio.tercetai.com" target="_blank" rel="noopener">Get a free mockup →</a>
+          <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=home-cta" target="_blank" rel="noopener">Get a free mockup →</a>
           <a class="btn btn-ghost" href="#/contact">Talk to us</a>
         </div>
       </div>
@@ -461,7 +483,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
   <div class="page-head"><div class="wrap">
     <div class="crumb"><a href="#/home">Home</a> / Services</div>
     <h1>One team, from first idea <span class="g">to running system.</span></h1>
-    <p class="lead">No hand-offs between a designer, a developer and a "support company". The people who build it also run it.</p>
+    <p class="lead">No hand-offs between a designer, a developer and a “support company”. The people who build it also run it.</p>
   </div></div>
   <div class="wrap">
     <div class="svc" id="svc-ready">
@@ -493,7 +515,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
       <div><span class="tag">04 · AI</span><h2 style="font-size:36px;margin-top:10px">AI that works on your own data</h2></div>
       <div>
         <p class="lead">Not a generic chatbot. Assistants that are connected to your system and can only read what they're allowed to.</p>
-        <ul><li><b style="color:var(--text)">Ask your system:</b> "How much did Branch 3 sell yesterday?" Answers come from your live data.</li><li><b style="color:var(--text)">Read documents for you:</b> purchase orders as PDF, photo or email, turned into sales orders automatically</li><li><b style="color:var(--text)">Voice and chat desks:</b> answer common customer questions and book appointments, with guardrails</li></ul>
+        <ul><li><b style="color:var(--text)">Ask your system:</b> “How much did Branch 3 sell yesterday?” Answers come from your live data.</li><li><b style="color:var(--text)">Read documents for you:</b> purchase orders as PDF, photo or email, turned into sales orders automatically</li><li><b style="color:var(--text)">Voice and chat desks:</b> answer common customer questions and book appointments, with guardrails</li></ul>
         <a class="link" style="margin-top:16px" href="#/work/orders">See a real example →</a>
       </div>
     </div>
@@ -516,11 +538,12 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
     <p class="lead">Built for Philippine businesses and already in daily use. Set up with your data and supported by the team that built them.</p>
   </div></div>
   <div class="wrap">
+    <h2 class="sr-only">Our products</h2>
     <div class="grid g3">
       <div class="card product hoverable">
         <span class="tag">Point of sale</span><h3>Tercet POS</h3>
         <p>For single stores up to multi-branch franchises, with a commissary.</p>
-        <ul><li>Sales across every branch, live</li><li>Inventory, stock transfers, low-stock alerts</li><li>Recipes and production from the commissary</li><li>Cash shift open and close</li><li>"Ask" assistant over your sales data</li></ul>
+        <ul><li>Sales across every branch, live</li><li>Inventory, stock transfers, low-stock alerts</li><li>Recipes and production from the commissary</li><li>Cash shift open and close</li><li>“Ask” assistant over your sales data</li></ul>
         <div class="from">from <b>₱1,500</b> / month</div>
         <a class="btn btn-primary" href="#/contact?topic=pos">Book a demo →</a>
       </div>
@@ -536,7 +559,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <p>Describe the system you need in a chat and get a clickable mockup you can show your team.</p>
         <ul><li>First mockup free</li><li>Websites, web apps, dashboards, mobile</li><li>Shareable link and QR code</li><li>Pay as you go after that, price shown before every build</li></ul>
         <div class="from"><b>Free</b> to start</div>
-        <a class="btn btn-primary" href="https://studio.tercetai.com" target="_blank" rel="noopener">Open Studio →</a>
+        <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=products" target="_blank" rel="noopener">Open Studio →</a>
       </div>
     </div>
     <section style="padding:70px 0 0">
@@ -555,7 +578,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
     <h1>Systems in <span class="g">daily use.</span></h1>
     <p class="lead">Client names are withheld for privacy. All of these systems are in daily use.</p>
   </div></div>
-  <div class="wrap"><div class="grid g2" id="allWork"></div></div>
+  <div class="wrap"><h2 class="sr-only">Case studies</h2><div class="grid g2" id="allWork"></div></div>
 </div>
 
 <!-- ═════════════════════════ WORK (detail) ═════════════════════════ -->
@@ -568,7 +591,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
   </div></div>
   <div class="wrap case">
     <div id="caseBody"></div>
-    <aside class="card facts"><dl id="caseFacts"></dl><a class="btn btn-primary" href="#/contact" style="justify-content:center">Need something like this? →</a></aside>
+    <aside class="card facts"><dl id="caseFacts"></dl><a class="btn btn-primary" id="caseCta" href="#/contact" style="justify-content:center">Need something like this? →</a></aside>
   </div>
   <div class="wrap" style="margin-top:50px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
     <a class="btn btn-ghost" href="#/work">← All case studies</a>
@@ -584,17 +607,18 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
     <p class="lead">No hourly billing. You know the price before we start, and you see a mockup before you commit.</p>
   </div></div>
   <div class="wrap">
+    <h2 class="sr-only">Plans</h2>
     <div class="grid g4">
       <div class="card plan hoverable">
         <span class="tag">Try it</span><h3>Free mockup</h3>
         <div class="amt">₱0</div>
         <ul><li>Describe your system in a chat</li><li>Clickable mockup to share with your team</li><li>No credit card</li></ul>
-        <a class="btn btn-ghost" href="https://studio.tercetai.com" target="_blank" rel="noopener">Start in Studio</a>
+        <a class="btn btn-ghost" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=pricing" target="_blank" rel="noopener">Start in Studio</a>
       </div>
       <div class="card plan feature">
         <span class="tag">Most popular</span><h3>Ready-made</h3>
-        <div class="amt">₱1,500<small> / month and up</small></div>
-        <ul><li>Tercet POS or Tercet Payroll</li><li>Setup with your data</li><li>Hosting, backups, updates</li><li>Support from the team that built it</li></ul>
+        <div class="amt">₱1,500<small>a month and up</small></div>
+        <ul><li>Tercet POS or Tercet Payroll</li><li>Set up with your data</li><li>Hosting, backups, updates</li><li>Support from the team that built it</li></ul>
         <a class="btn btn-primary" href="#/contact?topic=pos">Book a demo</a>
       </div>
       <div class="card plan hoverable">
@@ -633,9 +657,10 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
     <p class="lead">Tercet AI Innovations Inc. is a Philippine software and AI company. We build systems for businesses that can't afford wrong totals, lost records or a vendor who disappears.</p>
   </div></div>
   <div class="wrap">
+    <h2 class="sr-only">Our approach</h2>
     <div class="grid g2" style="margin-bottom:70px">
       <div class="card"><h3>Why we exist</h3><p>Anyone can generate an app now. Few companies will prove it works and stand behind it. That's the part we do: we build the system, test it until it holds, then stay around to run it.</p></div>
-      <div class="card"><h3>Nothing is "done" until it's run</h3><p>We don't call a feature finished because the code is written. It's done when it has been used end to end, as each kind of user, and passed. If something hasn't been tested, we tell you so.</p></div>
+      <div class="card"><h3>Nothing is “done” until it's run</h3><p>We don't call a feature finished because the code is written. It's done when it has been used end to end, as each kind of user, and passed. If something hasn't been tested, we tell you so.</p></div>
     </div>
     <div class="sec-head"><span class="eyebrow">The nine checks</span><h2>What every system passes before you see it live.</h2></div>
     <div class="gates">
@@ -656,6 +681,16 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <a class="btn btn-ghost" href="https://alfred.tercetai.com" target="_blank" rel="noopener">Digital card →</a>
       </div>
     </section>
+    <section style="padding-bottom:0">
+      <div class="cta">
+        <h2>Want to see how we'd build yours?</h2>
+        <p class="lead" style="margin:0 auto">Start with a free mockup, or tell us what slows you down.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=about" target="_blank" rel="noopener">Get a free mockup →</a>
+          <a class="btn btn-ghost" href="#/contact">Talk to us</a>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 
@@ -669,12 +704,13 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
   <div class="wrap contact">
     <div>
       <form id="form" novalidate>
+        <p class="muted" style="font-size:14px"><span class="req">*</span> Required</p>
         <div class="two">
-          <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="f-name">Your name <span class="req" aria-hidden="true">*</span></label><input id="f-name" name="name" autocomplete="name" required aria-describedby="ferr"></div>
           <div class="field"><label for="f-biz">Business name</label><input id="f-biz" name="biz" autocomplete="organization"></div>
         </div>
         <div class="two">
-          <div class="field"><label for="f-phone">Mobile or Viber</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="09XX XXX XXXX" required></div>
+          <div class="field"><label for="f-phone">Mobile or Viber <span class="req" aria-hidden="true">*</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="09XX XXX XXXX" required aria-describedby="ferr"></div>
           <div class="field"><label for="f-email">Email (optional)</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
         </div>
         <div class="field"><label for="f-topic">What do you need?</label>
@@ -690,14 +726,14 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
           </select>
         </div>
         <div class="field"><label for="f-msg">What's slowing you down?</label><textarea id="f-msg" name="msg" placeholder="e.g. We count stock by hand at 9 branches and the numbers never match."></textarea></div>
-        <p class="err" id="ferr" hidden>Please add your name and a mobile number so we can reach you.</p>
+        <p class="err" id="ferr" role="alert"></p>
         <button class="btn btn-primary" type="submit" style="justify-self:start">Send message →</button>
       </form>
       <div class="sent" id="sent" hidden>
-        <h3>Thanks, <span id="sentName"></span>. We've got it.</h3>
+        <h3 id="sentHead" tabindex="-1">Thanks, <span id="sentName"></span>. We've got it.</h3>
         <p class="muted">We'll message you on <span id="sentPhone" class="mono"></span>. In the meantime you can sketch your system for free in Studio.</p>
         <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
-          <a class="btn btn-primary" href="https://studio.tercetai.com" target="_blank" rel="noopener">Open Studio →</a>
+          <a class="btn btn-primary" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=contact-sent" target="_blank" rel="noopener">Open Studio →</a>
           <button class="btn btn-ghost" id="again" type="button">Send another</button>
         </div>
         <span class="todo">MOCKUP: on the real site this goes to hello@tercetai.com</span>
@@ -706,7 +742,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
     <div class="reach">
       <a class="card" href="mailto:hello@tercetai.com"><div class="ico">✉</div><div><small>Email</small>hello@tercetai.com</div></a>
       <a class="card" href="tel:+639173153590"><div class="ico">☏</div><div><small>Call or Viber</small>+63 917 315 3590</div></a>
-      <a class="card" href="https://studio.tercetai.com" target="_blank" rel="noopener"><div class="ico">◧</div><div><small>Prefer to show, not tell?</small>Build a free mockup in Studio</div></a>
+      <a class="card" href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=contact-side" target="_blank" rel="noopener"><div class="ico">◧</div><div><small>Prefer to show, not tell?</small>Build a free mockup in Studio</div></a>
     </div>
   </div>
 </div>
@@ -721,10 +757,10 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
         <p class="muted" style="font-size:15px;max-width:340px">Systems for Philippine businesses, built, tested and run by one team.</p>
       </div>
       <div><h4>Services</h4><a href="#/services/custom">Custom systems</a><a href="#/services/rescue">System rescue</a><a href="#/services/ai">AI assistants</a><a href="#/services/qa">QA reports</a></div>
-      <div><h4>Products</h4><a href="#/products">Tercet POS</a><a href="#/products">Tercet Payroll</a><a href="https://studio.tercetai.com" target="_blank" rel="noopener">Tercet Studio</a></div>
+      <div><h4>Products</h4><a href="#/products">Tercet POS</a><a href="#/products">Tercet Payroll</a><a href="https://studio.tercetai.com/?utm_source=tercetai.com&amp;utm_medium=website&amp;utm_content=footer" target="_blank" rel="noopener">Tercet Studio</a></div>
       <div><h4>Company</h4><a href="#/about">About</a><a href="#/work">Our work</a><a href="#/pricing">Pricing</a><a href="#/contact">Contact</a></div>
     </div>
-    <div class="legal"><span>© 2026 Tercet AI Innovations Inc.</span><span>hello@tercetai.com · +63 917 315 3590</span></div>
+    <div class="legal"><span>© 2026 Tercet AI Innovations Inc.</span><span><a href="mailto:hello@tercetai.com">hello@tercetai.com</a> · <a href="tel:+639173153590">+63 917 315 3590</a></span></div>
   </div>
 </footer>
 
@@ -733,7 +769,7 @@ footer{border-top:1px solid var(--border);margin-top:40px;padding:56px 0 calc(34
 <script>
 /* ── Case-study content (names withheld) ─────────────────────── */
 const CASES = [
-  { id:'pos', tag:'Food & beverage franchise', title:'One POS for every branch and the commissary',
+  { id:'pos', topic:'pos', tag:'Food & beverage franchise', title:'One POS for every branch and the commissary',
     lead:'A growing beverage franchise ran each store differently. Sales, stock and production lived in separate tools and spreadsheets.',
     challenge:'Head office only saw sales after branches sent end-of-day reports. Stock counts never matched, and the commissary produced by guesswork.',
     built:['Tercet POS across every branch, with live sales at head office','Inventory with transfers between commissary and stores','Recipes and production: making stock from ingredients, with cost tracking','Cash shift open and close for every cashier','An "Ask" assistant: owners query sales in plain words'],
@@ -741,7 +777,7 @@ const CASES = [
     outcome:'All branches on <b>one live system</b>',
     facts:[['Industry','Food & beverage franchise'],['Product','Tercet POS + custom modules'],['Users','Owners, managers, cashiers, commissary'],['Status','Live, expanding']],
     thumb:['Sales today','₱184,320','pill','9 branches open'] },
-  { id:'orders', tag:'Distribution', title:'Purchase orders that type themselves',
+  { id:'orders', topic:'ai', tag:'Distribution', title:'Purchase orders that type themselves',
     lead:'A distributor received customer POs as PDFs, photos and emails. Staff re-typed every line into the company ERP.',
     challenge:'Re-typing hundreds of lines a day was slow and error-prone, and the existing ERP couldn\'t be replaced.',
     built:['An AI reader that turns a PDF, photo or email PO into a draft sales order','Item and customer matching against the existing ERP','Staff review screen: approve, fix, post','Direct posting into the ERP, with no change to how the rest of the business works'],
@@ -749,7 +785,7 @@ const CASES = [
     outcome:'Live on <b>5 PCs</b> across 2 offices',
     facts:[['Industry','Distribution'],['Service','AI assistant + integration'],['Works with','Client\'s existing ERP'],['Status','Live']],
     thumb:['PO → Sales order','42 lines','pill teal','Read in 20s'] },
-  { id:'payroll', tag:'Manpower agency', title:'Payroll for 100 hotel staff, off spreadsheets',
+  { id:'payroll', topic:'payroll', tag:'Manpower agency', title:'Payroll for 100 hotel staff, off spreadsheets',
     lead:'A manpower agency paid about 100 staff deployed to hotels from spreadsheets, with every rule worked out by hand.',
     challenge:'Different schedules, rest days and statutory deductions per employee made every payroll run slow and risky.',
     built:['Tercet Payroll with SSS, PhilHealth, Pag-IBIG and withholding tax','Timesheet import from client hotels','Per-employee rules for rest days and paid days off','Payslips for every employee in one run'],
@@ -757,7 +793,7 @@ const CASES = [
     outcome:'<b>102 payslips</b> in one run',
     facts:[['Industry','Staffing / hospitality'],['Product','Tercet Payroll'],['Employees','~100'],['Status','Live']],
     thumb:['April payroll','₱1.84M','pill','102 / 102 payslips'] },
-  { id:'ctpl', tag:'Insurance', title:'Motor insurance, bought and issued online',
+  { id:'ctpl', topic:'custom', tag:'Insurance', title:'Motor insurance, bought and issued online',
     lead:'Compulsory motor insurance was sold over the counter, with manual forms and payment confirmation by phone.',
     challenge:'Sellers needed to issue policies fast, take payment on the spot, and be sure every certificate was genuine.',
     built:['Online issuance from a phone: plate, name, address, price','QR Ph payment with automatic confirmation','Policy and certificate generated instantly','QR code on every policy so anyone can verify it'],
@@ -792,10 +828,12 @@ function renderCase(id){
   document.getElementById('caseTitle').textContent = c.title;
   document.getElementById('caseLead').textContent = c.lead;
   document.getElementById('caseBody').innerHTML =
-    `<h3>The problem</h3><p>${c.challenge}</p>
-     <h3>What we built</h3><ul>${c.built.map(b=>`<li>${b}</li>`).join('')}</ul>
-     <h3>The result</h3><p>${c.result}</p>`;
+    `<h2>The problem</h2><p>${c.challenge}</p>
+     <h2>What we built</h2><ul>${c.built.map(b=>`<li>${b}</li>`).join('')}</ul>
+     <h2>The result</h2><p>${c.result}</p>`;
   document.getElementById('caseFacts').innerHTML = c.facts.map(f=>`<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('');
+  document.getElementById('caseCta').href = '#/contact?topic=' + c.topic;
+  TITLES.case = c.title + ' — Tercet AI';
   const next = CASES[(i+1) % CASES.length];
   const nx = document.getElementById('caseNext'); nx.href = '#/work/'+next.id; nx.textContent = 'Next: '+next.tag+' →';
   return true;
@@ -803,6 +841,13 @@ function renderCase(id){
 
 /* ── Router: #/view[/sub][?topic=x] ──────────────────────────── */
 const views = [...document.querySelectorAll('[data-view]')];
+// Per-view document titles so tabs, history and screen readers know the page changed.
+const TITLES = {
+  home:'Tercet AI — systems your business runs on', services:'Services — Tercet AI', products:'Products — Tercet AI',
+  work:'Our work — Tercet AI', case:'Case study — Tercet AI', pricing:'Pricing — Tercet AI',
+  about:'About — Tercet AI', contact:'Contact — Tercet AI'
+};
+let firstRoute = true;
 function route(){
   const raw = location.hash.replace(/^#\/?/, '') || 'home';
   const [path, query] = raw.split('?');
@@ -814,35 +859,64 @@ function route(){
   views.forEach(v => v.classList.toggle('on', v.dataset.view === target));
   const navKey = target === 'case' ? 'work' : target;
   document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('active', a.dataset.nav === navKey));
-  if(target === 'contact' && query){
-    const t = new URLSearchParams(query).get('topic');
-    if(t) document.getElementById('f-topic').value = t;
+  if(target === 'contact'){
+    // A plain "Talk to us" must not inherit the topic from an earlier visit.
+    const t = query ? new URLSearchParams(query).get('topic') : null;
+    const sel = document.getElementById('f-topic');
+    sel.value = [...sel.options].some(o => o.value === t) ? t : 'other';
   }
+  document.title = TITLES[target];
   setMenu(false);
-  if(scrollTo){ requestAnimationFrame(()=>document.getElementById(scrollTo)?.scrollIntoView({behavior:'smooth'})); }
+  const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+  if(scrollTo){ requestAnimationFrame(()=>document.getElementById(scrollTo)?.scrollIntoView({behavior})); }
   else window.scrollTo(0,0);
+  // Move focus to the new page's heading so keyboard and screen-reader users land on the new content.
+  if(!firstRoute){
+    const h1 = document.querySelector('[data-view].on h1');
+    if(h1){ h1.setAttribute('tabindex','-1'); h1.focus({preventScroll:true}); }
+  }
+  firstRoute = false;
 }
 window.addEventListener('hashchange', route);
 
 /* ── Mobile menu ─────────────────────────────────────────────── */
 const burger = document.getElementById('burger'), mmenu = document.getElementById('mmenu');
-function setMenu(open){ mmenu.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); burger.textContent = open ? '✕' : '☰'; }
+function setMenu(open){
+  mmenu.classList.toggle('open', open); burger.setAttribute('aria-expanded', open);
+  burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu'); burger.textContent = open ? '✕' : '☰';
+}
 burger.addEventListener('click', () => setMenu(!mmenu.classList.contains('open')));
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape' && mmenu.classList.contains('open')){ setMenu(false); burger.focus(); }
+});
 
 /* ── Contact form (mocked: validates, shows confirmation, sends nothing) ── */
-const form = document.getElementById('form');
+const form = document.getElementById('form'), ferr = document.getElementById('ferr'), sent = document.getElementById('sent');
 form.addEventListener('submit', e => {
   e.preventDefault();
-  const name = form.name.value.trim(), phone = form.phone.value.trim();
+  const nameEl = form.elements.name, phoneEl = form.elements.phone;
+  const name = nameEl.value.trim(), phone = phoneEl.value.trim();
   // Name + a reachable number are the minimum a seller needs to follow up.
-  if(!name || phone.replace(/\D/g,'').length < 10){ document.getElementById('ferr').hidden = false; return; }
-  document.getElementById('ferr').hidden = true;
+  const nameBad = !name, phoneBad = phone.replace(/\D/g,'').length < 10;
+  nameEl.setAttribute('aria-invalid', nameBad); phoneEl.setAttribute('aria-invalid', phoneBad);
+  if(nameBad || phoneBad){
+    ferr.textContent = nameBad && phoneBad ? 'Please add your name and a mobile number so we can reach you.'
+      : nameBad ? 'Please add your name.' : 'Please add a mobile number with at least 10 digits.';
+    (nameBad ? nameEl : phoneEl).focus();
+    return;
+  }
+  ferr.textContent = '';
   document.getElementById('sentName').textContent = name.split(' ')[0];
   document.getElementById('sentPhone').textContent = phone;
-  form.hidden = true; document.getElementById('sent').hidden = false;
+  form.hidden = true; sent.hidden = false;
+  // Bring the confirmation into view and focus it so it is seen and announced.
+  sent.scrollIntoView({block:'start', behavior:'auto'}); window.scrollBy(0, -90);
+  document.getElementById('sentHead').focus({preventScroll:true});
 });
 document.getElementById('again').addEventListener('click', () => {
-  form.reset(); form.hidden = false; document.getElementById('sent').hidden = true;
+  form.reset(); form.hidden = false; sent.hidden = true;
+  form.elements.name.removeAttribute('aria-invalid'); form.elements.phone.removeAttribute('aria-invalid');
+  form.elements.name.focus();
 });
 
 route();
