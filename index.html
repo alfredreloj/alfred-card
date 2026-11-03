@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Alfred P. Reloj — AI & Software Automation Consultant, Tercet Innovations Inc. Save the contact, call, or email.">
+<meta name="description" content="Alfred P. Reloj — President, Tercet Innovations Inc. Save the contact, call, or email.">
 <meta name="theme-color" content="#0b0f14">
 <meta property="og:title" content="Alfred P. Reloj · Tercet">
-<meta property="og:description" content="AI & Software Automation Consultant — Tercet Innovations Inc">
+<meta property="og:description" content="President — Tercet Innovations Inc">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%230b0f14%27/%3E%3Ctext x=%2732%27 y=%2745%27 font-family=%27Georgia,serif%27 font-style=%27italic%27 font-size=%2740%27 fill=%27%235ee0d0%27 text-anchor=%27middle%27%3ET%3C/text%3E%3C/svg%3E">
 <title>Alfred P. Reloj</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -194,7 +194,7 @@
 
   <section class="identity">
     <h1>Alfred <em>P.</em> Reloj</h1>
-    <p class="role">AI &amp; Software Automation Consultant</p>
+    <p class="role">President</p>
     <p class="org">Tercet Innovations Inc</p>
   </section>
 
@@ -259,7 +259,7 @@
   var VCARD = [
     'BEGIN:VCARD','VERSION:3.0',
     'N:Reloj;Alfred;P.;;','FN:Alfred P. Reloj',
-    'ORG:Tercet Innovations Inc','TITLE:AI and Software Automation Consultant',
+    'ORG:Tercet Innovations Inc','TITLE:President',
     'TEL;TYPE=CELL,VOICE:+639173153590','EMAIL;TYPE=INTERNET,WORK:alfred@tercetai.com',
     'URL:https://tercetai.com','END:VCARD'
   ].join('\r\n');
@@ -302,7 +302,7 @@
     });
   });
   document.getElementById('share').addEventListener('click', function () {
-    var data = { title: 'Alfred P. Reloj · Tercet', text: 'AI & Software Automation Consultant', url: location.href };
+    var data = { title: 'Alfred P. Reloj · Tercet', text: 'President', url: location.href };
     if (navigator.share) { navigator.share(data).catch(function () {}); }
     else copyText(location.href, function () { toast('Link copied'); });
   });
