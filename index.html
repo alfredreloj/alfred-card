@@ -4,32 +4,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="description" content="Alfred P. Reloj — President, Tercet Innovations Inc. Save the contact, call, or email.">
-<meta name="theme-color" content="#0b0f14">
+<meta name="theme-color" content="#fbfbfe">
 <meta property="og:title" content="Alfred P. Reloj · Tercet">
 <meta property="og:description" content="President — Tercet Innovations Inc">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%230b0f14%27/%3E%3Ctext x=%2732%27 y=%2745%27 font-family=%27Georgia,serif%27 font-style=%27italic%27 font-size=%2740%27 fill=%27%235ee0d0%27 text-anchor=%27middle%27%3ET%3C/text%3E%3C/svg%3E">
+<!-- favicon = tercetai.com's three-bar mark -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 26 26%27%3E%3Cdefs%3E%3ClinearGradient id=%27g%27 x1=%270%27 x2=%271%27%3E%3Cstop offset=%270%27 stop-color=%27%234f46e5%27/%3E%3Cstop offset=%27.5%27 stop-color=%27%237c3aed%27/%3E%3Cstop offset=%271%27 stop-color=%27%230ea5e9%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x=%271%27 y=%273%27 width=%2724%27 height=%275%27 rx=%272.5%27 fill=%27url(%23g)%27/%3E%3Crect x=%271%27 y=%2710.5%27 width=%2716%27 height=%275%27 rx=%272.5%27 fill=%27url(%23g)%27/%3E%3Crect x=%271%27 y=%2718%27 width=%2720%27 height=%275%27 rx=%272.5%27 fill=%27%230f172a%27/%3E%3C/svg%3E">
 <title>Alfred P. Reloj</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Albert+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..800&family=Geist+Mono:wght@400..600&display=swap">
 <style>
-  /* ── Tercet card · one committed dark world (painted explicitly, no host bleed) ── */
+  /* ── Tercet card · same light theme as tercetai.com (indigo/violet/sky on white, Geist) ── */
   :root{
-    --ground:#0b0f14;
-    --surface:#111820;
-    --surface-2:#161f29;
-    --line:rgba(232,238,242,.10);
-    --line-strong:rgba(232,238,242,.18);
-    --text:#e8eef2;
-    --muted:#8a98a6;
-    --accent:#5ee0d0;
-    --accent-deep:#2fb5a5;
-    --accent-ink:#06302b;
-    --glow:rgba(94,224,208,.28);
-    --font-display:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
-    --font-body:"Albert Sans","Helvetica Neue",Arial,sans-serif;
-    --font-mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
-    color-scheme:dark;
+    --ground:#fbfbfe;
+    --surface:#ffffff;
+    --surface-2:#f3f4fb;
+    --line:#e6e8f1;
+    --line-strong:#d9dcea;
+    --text:#0f172a;
+    --muted:#5b6478;
+    --accent:#4f46e5;
+    --accent-deep:#7c3aed;
+    --accent-ink:#ffffff;
+    --glow:rgba(79,70,229,.30);
+    --brand:linear-gradient(100deg,#4f46e5 0%,#7c3aed 45%,#0ea5e9 100%);
+    --shadow:0 1px 2px rgba(15,23,42,.05),0 12px 32px -12px rgba(30,27,75,.18);
+    --shadow-lg:0 2px 4px rgba(15,23,42,.04),0 30px 70px -24px rgba(49,46,129,.35);
+    --font-display:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --font-body:"Geist",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --font-mono:"Geist Mono",ui-monospace,Menlo,Consolas,monospace;
+    color-scheme:light;
   }
   *{box-sizing:border-box}
   html{background:var(--ground)}
@@ -44,15 +48,11 @@
   /* eyebrow */
   .eyebrow{
     display:flex;align-items:center;justify-content:space-between;gap:12px;
-    padding:18px 0 6px;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;
+    padding:18px 0 6px;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;
     text-transform:uppercase;color:var(--muted);white-space:nowrap;
   }
   .eyebrow .mark{display:inline-flex;align-items:center;gap:10px;color:var(--text);min-width:0}
-  .eyebrow .mark i{
-    display:inline-block;width:18px;height:18px;border-radius:5px;
-    background:linear-gradient(135deg,var(--accent),var(--accent-deep));
-    box-shadow:0 0 18px var(--glow);
-  }
+  .eyebrow .mark svg{width:20px;height:20px;flex:none}
   .eyebrow .loc{font-variant-numeric:tabular-nums}
 
   /* stage */
@@ -61,9 +61,11 @@
     /* touch-action:none — the stage owns every drag direction (up/down/sides/diagonal)
        so vertical swipes pitch the card instead of scrolling; scroll from below it. */
     overflow:hidden;cursor:grab;user-select:none;touch-action:none;overscroll-behavior:contain;
+    /* soft indigo/violet/sky aurora, as on the site hero */
     background:
-      radial-gradient(60% 55% at 50% 48%, rgba(94,224,208,.10), transparent 70%),
-      radial-gradient(120% 80% at 50% 110%, #0f1620, transparent 60%);
+      radial-gradient(55% 50% at 50% 48%, rgba(124,58,237,.14), transparent 70%),
+      radial-gradient(45% 40% at 20% 20%, rgba(14,165,233,.12), transparent 70%),
+      radial-gradient(45% 40% at 85% 85%, rgba(79,70,229,.12), transparent 70%);
   }
   .stage:active{cursor:grabbing}
   .stage canvas{display:block;width:100%;height:100%}
@@ -80,18 +82,19 @@
   .stage.nogl canvas{display:none}
   .fallback .card{
     width:300px;aspect-ratio:1.62;border-radius:16px;
-    background:linear-gradient(135deg,#1a2330,#0c1118 55%,#132029);
-    border:1px solid var(--line-strong);box-shadow:0 30px 60px rgba(0,0,0,.55),0 0 60px var(--glow);
-    display:grid;place-items:end start;padding:18px;font-family:var(--font-display);font-size:34px;color:var(--accent);
+    background:linear-gradient(135deg,#1c1f3d,#0d1020 60%,#151a36);
+    box-shadow:var(--shadow-lg),0 0 60px var(--glow);
+    display:grid;place-items:end start;padding:18px;font-family:var(--font-display);font-weight:700;font-size:34px;letter-spacing:-.03em;color:#fff;
   }
 
   /* identity */
   .identity{padding:22px 0 8px}
   h1{
-    font-family:var(--font-display);font-weight:400;font-size:clamp(40px,11vw,58px);
-    line-height:.98;letter-spacing:-.01em;margin:0;text-wrap:balance;
+    font-family:var(--font-display);font-weight:650;font-size:clamp(38px,10vw,54px);
+    line-height:1.02;letter-spacing:-.035em;margin:0;text-wrap:balance;
   }
-  h1 em{font-style:italic;color:var(--accent)}
+  /* brand-gradient text, same treatment as the site's .grad headline word */
+  h1 em{font-style:normal;background:var(--brand);-webkit-background-clip:text;background-clip:text;color:transparent}
   .role{margin:10px 0 0;font-size:17px;font-weight:500;color:var(--text)}
   .org{margin:2px 0 0;font-size:15px;color:var(--muted)}
 
@@ -101,19 +104,23 @@
   }
   .btn{
     display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    height:50px;border-radius:12px;padding:0 14px;text-decoration:none;
+    height:50px;border-radius:999px;padding:0 12px;text-decoration:none;white-space:nowrap;
     font-weight:600;font-size:15px;color:var(--text);
-    background:var(--surface);border:1px solid var(--line-strong);
-    transition:transform .12s ease,background .15s ease,border-color .15s ease;
+    background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);
+    transition:transform .25s cubic-bezier(.2,.8,.2,1),background .2s,border-color .2s,box-shadow .25s;
   }
-  .btn:hover{background:var(--surface-2);border-color:rgba(232,238,242,.28)}
   .btn:active{transform:translateY(1px)}
-  .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .btn:focus-visible{outline:2.5px solid var(--accent);outline-offset:3px}
+  /* primary = the site's dark pill with a brand glow */
   .btn.primary{
-    background:var(--accent);color:var(--accent-ink);border-color:transparent;
-    box-shadow:0 8px 30px var(--glow);
+    background:var(--text);color:#fff;border-color:transparent;
+    box-shadow:0 8px 24px -10px rgba(79,70,229,.6);
   }
-  .btn.primary:hover{background:#7ae9db}
+  /* same hover rule as the site: everything clickable visibly lifts (mouse only) */
+  @media (hover:hover){
+    .btn:hover{transform:translateY(-3px) scale(1.02);background:var(--surface-2);border-color:#c7d2fe;box-shadow:var(--shadow-lg)}
+    .btn.primary:hover{background:var(--text);box-shadow:0 16px 34px -10px rgba(79,70,229,.8)}
+  }
   .btn svg{width:18px;height:18px;flex:none}
 
   /* readout — the spec sheet */
@@ -142,7 +149,7 @@
     padding:8px 10px;border-radius:8px;cursor:pointer;min-width:74px;
     transition:color .15s,border-color .15s,background .15s;
   }
-  .copy:hover{color:var(--text);border-color:rgba(232,238,242,.3)}
+  .copy:hover{color:var(--accent);border-color:#a5b4fc;background:#eef2ff}
   .copy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   .copy.done{color:var(--accent-ink);background:var(--accent);border-color:transparent}
 
@@ -163,12 +170,17 @@
 
   .toast{
     position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(8px);
-    background:var(--surface-2);color:var(--text);border:1px solid var(--line-strong);
-    padding:10px 14px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;
-    transition:opacity .2s,transform .2s;box-shadow:0 10px 30px rgba(0,0,0,.5);
+    background:var(--text);color:#fff;border:0;
+    padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;
+    transition:opacity .2s,transform .2s;box-shadow:var(--shadow-lg);
   }
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+  /* very narrow phones: Geist is wider than the old face, so Save gets its own row */
+  @media (max-width:359px){
+    .actions{grid-template-columns:1fr 1fr}
+    .actions .primary{grid-column:1 / -1}
+  }
   @media (min-width:640px){
     .page{max-width:560px}
     .stage{margin:0 -20px;border-radius:0 0 24px 24px}
@@ -182,7 +194,7 @@
 
 <div class="page">
   <header class="eyebrow">
-    <span class="mark"><i aria-hidden="true"></i>Tercet Innovations Inc</span>
+    <span class="mark"><svg viewBox="0 0 26 26" aria-hidden="true"><defs><linearGradient id="sg" x1="0" x2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset=".5" stop-color="#7c3aed"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs><rect x="1" y="3" width="24" height="5" rx="2.5" fill="url(#sg)"/><rect x="1" y="10.5" width="16" height="5" rx="2.5" fill="url(#sg)"/><rect x="1" y="18" width="20" height="5" rx="2.5" fill="#0f172a"/></svg>Tercet Innovations Inc</span>
     <span class="loc">Philippines · GMT+8</span>
   </header>
 
@@ -323,8 +335,9 @@
   var camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
   camera.position.set(0, 0, 8.4);
 
-  var ACCENT = new THREE.Color(0x5ee0d0);
-  var BASE = new THREE.Color(0x0e141b);
+  /* ink slab (the site's dark pill colour); brand colours live only in the sheen */
+  var ACCENT = new THREE.Color(0xe0e7ff);
+  var BASE = new THREE.Color(0x0d1020);
 
   /* card = three slabs (a tercet). Credit-card proportion. */
   var W = 3.5, H = 2.16, D = 0.10, GAP = 0.028;
@@ -340,39 +353,48 @@
     return s;
   }
 
-  /* etched marks: front = wordmark + monogram, back = contact readout */
+  /* the tercetai.com logo: three rounded bars (a tercet is a verse of three lines), drawn at size s */
+  function tercetBars(g, x, y, s) {
+    var u = s / 26, bars = [[3, 24], [10.5, 16], [18, 20]];
+    bars.forEach(function (b) {
+      var bx = x + u, by = y + b[0] * u, bw = b[1] * u, bh = 5 * u, r = bh / 2;
+      g.beginPath();
+      g.moveTo(bx + r, by); g.lineTo(bx + bw - r, by); g.arc(bx + bw - r, by + r, r, -Math.PI / 2, Math.PI / 2);
+      g.lineTo(bx + r, by + bh); g.arc(bx + r, by + r, r, Math.PI / 2, Math.PI * 1.5); g.fill();
+    });
+  }
+
+  /* etched marks: front = wordmark + logo, back = contact readout */
   function makeMark(back) {
     var c = document.createElement('canvas'); c.width = 1024; c.height = 632;
     var g = c.getContext('2d');
     g.fillStyle = '#000'; g.fillRect(0, 0, c.width, c.height);
     g.fillStyle = '#fff'; g.textBaseline = 'alphabetic';
     if (!back) {
-      g.font = '500 30px "JetBrains Mono", monospace';
+      g.font = '500 30px "Geist Mono", monospace';
       g.letterSpacing = '10px';
       g.fillText('T E R C E T', 72, 96);
-      g.font = '400 22px "JetBrains Mono", monospace'; g.globalAlpha = .7;
+      g.font = '400 22px "Geist Mono", monospace'; g.globalAlpha = .7;
       g.fillText('INNOVATIONS INC', 72, 134);
-      g.globalAlpha = 1;
-      g.font = 'italic 400 300px "Instrument Serif", Georgia, serif';
-      g.fillText('T', 700, 560);
+      g.globalAlpha = 1; g.letterSpacing = '0px';
+      tercetBars(g, 862, 58, 96);
       g.fillRect(72, 540, 300, 2);
-      g.font = '400 24px "JetBrains Mono", monospace'; g.globalAlpha = .75;
+      g.font = '400 24px "Geist Mono", monospace'; g.globalAlpha = .75; g.letterSpacing = '4px';
       g.fillText('ALFRED P. RELOJ', 72, 585);
     } else {
-      g.font = '500 26px "JetBrains Mono", monospace'; g.globalAlpha = .7;
+      g.font = '500 26px "Geist Mono", monospace'; g.globalAlpha = .7;
       g.fillText('MOBILE', 72, 120);
-      g.globalAlpha = 1; g.font = '500 60px "JetBrains Mono", monospace';
+      g.globalAlpha = 1; g.font = '500 60px "Geist Mono", monospace';
       g.fillText('0917 315 3590', 72, 190);
-      g.font = '500 26px "JetBrains Mono", monospace'; g.globalAlpha = .7;
+      g.font = '500 26px "Geist Mono", monospace'; g.globalAlpha = .7;
       g.fillText('EMAIL', 72, 290);
-      g.globalAlpha = 1; g.font = '500 48px "JetBrains Mono", monospace';
+      g.globalAlpha = 1; g.font = '500 48px "Geist Mono", monospace';
       g.fillText('alfred@tercetai.com', 72, 352);
-      g.font = '500 26px "JetBrains Mono", monospace'; g.globalAlpha = .7;
+      g.font = '500 26px "Geist Mono", monospace'; g.globalAlpha = .7;
       g.fillText('AI & SOFTWARE AUTOMATION', 72, 470);
       g.fillText('tercetai.com', 72, 512);
       g.globalAlpha = 1;
-      g.font = 'italic 400 140px "Instrument Serif", Georgia, serif';
-      g.fillText('T', 860, 560);
+      tercetBars(g, 862, 470, 96);
     }
     var t = new THREE.CanvasTexture(c); t.minFilter = THREE.LinearFilter; t.anisotropy = 4;
     return t;
@@ -396,7 +418,10 @@
     'uniform float uTime; uniform vec3 uBase; uniform vec3 uRim; uniform float uPulse;',
     'uniform sampler2D uMarkF; uniform sampler2D uMarkB;',
     'varying vec3 vN; varying vec3 vV; varying vec2 vUv; varying float vFront;',
-    'vec3 pal(float t){ return 0.5 + 0.5 * cos(6.28318 * (t + vec3(0.0, 0.33, 0.67))); }',
+    /* sheen cycles through the brand only: indigo -> violet -> sky (no rainbow) */
+    'vec3 pal(float t){ float k = 0.5 + 0.5 * cos(6.28318 * t);',
+    '  vec3 a = vec3(0.31, 0.27, 0.90), b = vec3(0.49, 0.23, 0.93), c = vec3(0.05, 0.65, 0.91);',
+    '  return k < 0.5 ? mix(a, b, k * 2.0) : mix(b, c, (k - 0.5) * 2.0); }',
     'void main(){',
     '  vec3 n = normalize(vN); vec3 v = normalize(-vV);',
     '  float ndv = clamp(dot(n, v), 0.0, 1.0);',
@@ -411,15 +436,15 @@
     '  vec3 l = normalize(vec3(0.6, 0.9, 1.0));',
     '  float spec = pow(max(dot(reflect(-l, n), v), 0.0), 60.0);',
     '  vec3 col = uBase;',
-    '  col += irid * (fres * 0.85 + band * 0.16);',
-    '  col += uRim * (fres * 0.45 + uPulse * 0.6);',
-    '  col += vec3(0.9, 0.95, 1.0) * spec * 0.35;',
+    '  col += irid * (fres * 0.55 + band * 0.12);',
+    '  col += uRim * (fres * 0.12 + uPulse * 0.35);',
+    '  col += vec3(0.9, 0.95, 1.0) * spec * 0.30;',
     /* fine etched grid, only on faces */
     '  if (abs(vFront) > 0.5) {',
     '    vec2 g = abs(fract(vUv * vec2(40.0, 25.0)) - 0.5);',
-    '    col += smoothstep(0.47, 0.5, max(g.x, g.y)) * 0.035;',
+    '    col += smoothstep(0.47, 0.5, max(g.x, g.y)) * 0.022;',
     '    float mark = vFront > 0.0 ? texture2D(uMarkF, vUv).r : texture2D(uMarkB, vec2(1.0 - vUv.x, vUv.y)).r;',
-    '    col += uRim * mark * (0.55 + 0.35 * fres + uPulse * 0.5);',
+    '    col += uRim * mark * (0.72 + 0.2 * fres + uPulse * 0.3);',
     '  }',
     '  gl_FragColor = vec4(col, 1.0);',
     '}'
@@ -452,18 +477,19 @@
     var c = document.createElement('canvas'); c.width = c.height = 256;
     var g = c.getContext('2d');
     var r = g.createRadialGradient(128, 128, 0, 128, 128, 128);
-    r.addColorStop(0, 'rgba(94,224,208,0.55)'); r.addColorStop(0.45, 'rgba(94,224,208,0.12)'); r.addColorStop(1, 'rgba(94,224,208,0)');
+    /* violet glow; normal blending because additive light vanishes on a white page */
+    r.addColorStop(0, 'rgba(124,58,237,0.30)'); r.addColorStop(0.45, 'rgba(79,70,229,0.09)'); r.addColorStop(1, 'rgba(79,70,229,0)');
     g.fillStyle = r; g.fillRect(0, 0, 256, 256);
     var t = new THREE.CanvasTexture(c);
     var halo = new THREE.Mesh(new THREE.PlaneGeometry(7.5, 7.5),
-      new THREE.MeshBasicMaterial({ map: t, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+      new THREE.MeshBasicMaterial({ map: t, transparent: true, depthWrite: false }));
     halo.position.z = -0.9; halo.name = 'halo'; scene.add(halo);
   })();
 
   /* lattice: drifting nodes + near-neighbour links */
   var lattice = new THREE.Group(); scene.add(lattice);
   (function () {
-    var N = 220, pos = new Float32Array(N * 3), pts = [];
+    var N = 150, pos = new Float32Array(N * 3), pts = [];
     for (var k = 0; k < N; k++) {
       var r = 3.2 + Math.random() * 3.4, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
       var x = r * Math.sin(ph) * Math.cos(th), y = r * Math.sin(ph) * Math.sin(th) * 0.7, z = r * Math.cos(ph) - 1.5;
@@ -476,7 +502,7 @@
     g.fillStyle = rg; g.fillRect(0, 0, 64, 64);
     var dot = new THREE.CanvasTexture(c);
     lattice.add(new THREE.Points(pg, new THREE.PointsMaterial({
-      size: 0.075, map: dot, color: 0x9fe9df, transparent: true, opacity: 0.85, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
+      size: 0.06, map: dot, color: 0x7c3aed, transparent: true, opacity: 0.35, depthWrite: false, sizeAttenuation: true
     })));
     var lp = [];
     for (var a = 0; a < N; a++) for (var b = a + 1; b < N; b++) {
@@ -484,7 +510,7 @@
       if (dx * dx + dy * dy + dz * dz < 1.15) lp.push(pts[a][0], pts[a][1], pts[a][2], pts[b][0], pts[b][1], pts[b][2]);
     }
     var lg = new THREE.BufferGeometry(); lg.setAttribute('position', new THREE.BufferAttribute(new Float32Array(lp), 3));
-    lattice.add(new THREE.LineSegments(lg, new THREE.LineBasicMaterial({ color: 0x5ee0d0, transparent: true, opacity: 0.16, depthWrite: false, blending: THREE.AdditiveBlending })));
+    lattice.add(new THREE.LineSegments(lg, new THREE.LineBasicMaterial({ color: 0x4f46e5, transparent: true, opacity: 0.07, depthWrite: false })));
   })();
 
   /* ── sizing ── */
